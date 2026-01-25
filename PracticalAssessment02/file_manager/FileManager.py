@@ -28,15 +28,48 @@ Reference:
 import os
 
 class FileManager: 
-    #Provides file input/output operations for text files.
-    def read_file(self, filename: str) -> str:
-      
-      #Reads the contents of a text file and returns it as a string.
-      #Adds '.txt' if missing and checks file existence.
+    """Provides file input/output operations for text files."""
 
+    def read_file(self, filename: str) -> str:      
+        #Reads the contents of a text file and returns it as a string.
+        #Adds '.txt' if missing and checks file existence.
+
+        # Ensure the filename ends with .txt
         if not filename.endswith(".txt"):
-            filename += ".txt"
+           filename += ".txt"
+
+        # Check if the file exists; if not, return a message
         if not os.path.exists(filename):
             return f"File '{filename}' does not exist."
+        
+        # Open the file safely using 'with' to avoid resource leaks
         with open(filename, "r") as f:
             return f.read()
+        
+    def write_file(self, filename: str, text: str) -> None:      
+        #Writes the given text to a file.
+        #Adds '.txt' if missing, checks if the file exists, and asks for overwrite confirmation.
+        #If the user chooses not to overwrite, appends the text on a new line.
+
+        # Ensure the filename ends with .txt
+        if not filename.endswith(".txt"):
+            filename += ".txt"
+
+        # Check if the file already exists
+        if os.path.exists(filename):
+            
+            # Ask user if they want to overwrite
+            overwrite = input(f"File '{filename}' exists. Overwrite? (y/n): ").strip().lower()
+
+            #if user chooses Not to overwrite, append text to the end
+            if overwrite != 'y':
+               with open(filename, "a") as f:
+                  f.write("\n"+text) # Add newline before appending
+                  print(f"\nText added to '{filename}' successfully.\n")
+               return # Exit function after appending
+      
+      # If file does not exist or user chooses to overwrite        
+        with open(filename, "w") as f:
+             f.write(text)
+             print(f"\nText written to '{filename}' successfully.\n")
+      

@@ -26,42 +26,63 @@ Reference:
       Available: https://realpython.com/read-write-files-python/. [Accessed 24 1 2026].
 
 """
-
+# Import the FileManager class from the file_manager package
 from file_manager.FileManager import FileManager
 
+
 def menu():
+   """Displays a looped menu for file i/o operations."""
+
+   # Store user name to display in the menu
    user_name = "Annabel Cheng"
+
+   # Create an instance of FileManager to handle file reading and writing
    fm = FileManager()
 
-   print(f"Welcome, {user_name}!\n")
+   # Greet the user once at the start
+   print(f"\nWelcome, {user_name}!")
 
+   # Start the main menu loop
    while True: 
-      print("------ File I/O Menu ------")
+      # Display menu options
+      print("\n------ File I/O Menu ------")
       print("1. Read a file")
       print("2. Write a file")
       print("3. Exit")
       print("---------------------------\n")
-
+      # Ask user for menu choice
       choice = input("Enter your choice (1-3): ").strip()
 
+      # Option 1: Read a file
       if choice == "1": 
          filename = input("\nEnter the file name to read: ").strip()
+         # Call FileManager to read file content
          content = fm.read_file(filename)
+         # Display file content
          print("\n------ File Content ------")
          print(content)
+      
+      # Option 2: Write a file
+      elif choice == "2": 
+         text = input("\nEnter the info to write: ").strip()
+         filename = input("\nEnter the file to write to: ").strip()
+         # Call FileManager to write the text to file
+         fm.write_file(filename, text)
 
+      # Option 3: Exit the program
       elif choice == "3":
          print(f"Goodbye, {user_name}!\n")
          break
 
+      # Invalid input handling
       else: 
          print("Invalid choice. Please select 1, 2, or 3.")
     
-
+# Run the menu function only if this script is executed directly
 if __name__ == "__main__":
    menu()
 
-
+# signoff info
 print ("-------------------------------------------------------") #Divider
 print ("Message: File-IO program for Practical Assessment 2") #Show main message.
 print ("Version: Python 3.14.2")    #Show programming language used, and version.
