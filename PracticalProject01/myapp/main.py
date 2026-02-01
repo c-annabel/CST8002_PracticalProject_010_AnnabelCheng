@@ -15,7 +15,7 @@ Version: Python 3.14.2
 Date: 2026.02.01
 
 GitHub Repo: 
-https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalAssessment02
+https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject01
 
 Reference: 
 [1] 	W3Schools, "Python File Open," W3.CSS, [Online]. 
@@ -35,6 +35,7 @@ def menu():
 
    # Store user name to display in the menu
    user_name = "Annabel Cheng"
+   filename = "pacific_rim_npr_coastalmarine_migratory_shorebird_habitat_use_2011-2017_data.csv"
 
    # Create an instance of FileManager to handle file reading and writing
    fm = FileManager()
@@ -55,7 +56,6 @@ def menu():
 
       # Option 1: Read a file
       if choice == "1": 
-         filename = input("\nEnter the file name to read: ").strip()
          # Call FileManager to read file content
          content = fm.read_file(filename)
          # Display file content
@@ -65,7 +65,6 @@ def menu():
       # Option 2: Write a file
       elif choice == "2": 
          text = input("\nEnter the info to write: ").strip()
-         filename = input("\nEnter the file to write to: ").strip()
          # Call FileManager to write the text to file
          fm.write_file(filename, text)
 
@@ -84,7 +83,7 @@ if __name__ == "__main__":
 
 # signoff info
 print ("-------------------------------------------------------") #Divider
-print ("Message: File-IO program for Practical Assessment 2") #Show main message.
+print ("Message: File-IO program for Practical Project 1") #Show main message.
 print ("Version: Python 3.14.2")    #Show programming language used, and version.
 print ("Author:  Annabel Cheng")    #show author's name as seen in ACSIS
-print ("-------------------------------------------------------\n") #Divider
+print ("-------------------------------------------------------\n") #Dividera
