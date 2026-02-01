@@ -1,5 +1,5 @@
 """
-Docstring for FileManager.py of Practical Assessment 2
+Docstring for FileManager.py of Practical Project 1
 
 Course: CST8002 Section 010
 Professor: Stanley Pieda
@@ -58,4 +58,5 @@ class FileManager:
                   print(f"\nText added to '{filename}' successfully.\n")
                return # Exit function after appending
       
+
       
