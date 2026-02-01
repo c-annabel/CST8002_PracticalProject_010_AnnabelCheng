@@ -1,5 +1,5 @@
 """
-Docstring for FileManager.py of Practical Project 1
+Docstring for FileHandler.py of Practical Project 1
 
 Course: CST8002 Section 010
 Professor: Stanley Pieda
@@ -27,7 +27,7 @@ Reference:
 
 import os
 
-class FileManager: 
+class FileHandler: 
     """Provides file input/output operations for text files."""
 
     def read_file(self, filename: str) -> str:      

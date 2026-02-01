@@ -25,8 +25,8 @@ Reference:
       Available: https://realpython.com/read-write-files-python/. [Accessed 24 1 2026].
 
 """
-# Import the FileManager class from the file_manager package
-from file_manager.FileManager import FileManager
+# Import the FileHandler class from the file_manager package
+from myapp.file_io.file_handler import FileHandler
 
 
 def main():
@@ -36,8 +36,8 @@ def main():
    user_name = "Annabel Cheng"
    filename = "pacific_rim_npr_coastalmarine_migratory_shorebird_habitat_use_2011-2017_data.csv"
 
-   # Create an instance of FileManager to handle file reading and writing
-   fm = FileManager()
+   # Create an instance of FileHandler to handle file reading and writing
+   fm = FileHandler()
 
    # Greet the user once at the start
    print(f"\nWelcome, {user_name}!")
@@ -55,7 +55,7 @@ def main():
 
       # Option 1: Read a file
       if choice == "1": 
-         # Call FileManager to read file content
+         # Call FileHandler to read file content
          content = fm.read_file(filename)
          # Display file content
          print("\n------ File Content ------")
@@ -64,7 +64,7 @@ def main():
       # Option 2: Write a file
       elif choice == "2": 
          text = input("\nEnter the info to write: ").strip()
-         # Call FileManager to write the text to file
+         # Call FileHandler to write the text to file
          fm.write_file(filename, text)
 
       # Option 3: Exit the program
@@ -81,8 +81,8 @@ if __name__ == "__main__":
    main()
 
 # signoff info
-print ("===========================================================") #Divider
+print ("=============================================================") #Divider
 print ("Message: Fundamental Python program for Practical Project 1") #Show main message.
 print ("Version: Python 3.14.2")    #Show programming language used, and version.
 print ("Author:  Annabel Cheng")    #show author's name as seen in ACSIS
-print ("===========================================================\n") #Divider
+print ("=============================================================\n") #Divider
