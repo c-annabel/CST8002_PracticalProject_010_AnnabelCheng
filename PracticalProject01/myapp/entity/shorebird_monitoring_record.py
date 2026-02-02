@@ -7,7 +7,7 @@ Professor: Stanley Pieda
 Author: Annabel Cheng
 Student ID: 041146557
 
-Description: This program creates a class and uses the column names from the dataset
+Description: This program creates an entity class and uses the column names from the dataset
              as a reference for names of constants, variables, and accessors/mutators. 
 
 Version: Python 3.14.2
@@ -32,6 +32,8 @@ class ShorebirdMonitoringRecord:
    """
    Entity for one row in the provided dataset
    Column names are used as part of the variable names, accessors/mutators names, or constants. 
+
+   This class is manually authored and not provided by any framework.
    """
    # Constants of dataset column names as shown in the file header
    COL_SITE_IDENTIFICATION = "Site identification"
@@ -43,10 +45,27 @@ class ShorebirdMonitoringRecord:
 
    # constructor that runs automatically each time create a new object from the class
    def __init__(self, site_identification, area, visit_date, start_time, species_code, count):
-      #Take the parameters passed into the constructor and store them inside this object
-      #Variables named after column names
-      #self refers to the current object being created, allows each object to store 
-      #     its own copy of data, similar to "this specific record"
+
+      """
+      Constructor that runs automatically each time create a new object from the class
+      
+      This method initializes a new record object by assigning
+      values parsed from a CSV row to instance variables.
+
+      Parameters:
+            site_identification (str): Site identification value
+            area (str): Area value
+            visit_date (str): Visit date value
+            start_time (str): Start time value
+            species_code (str): Species code value
+            count (str): Count value
+
+      - Take the parameters passed into the constructor and store them inside this object
+      - Variables named after column names
+      - self refers to the current object being created, allows each object to store 
+        its own copy of data, similar to "this specific record".
+   
+      """
 
       self.site_identification = site_identification
       self.area = area
@@ -54,6 +73,10 @@ class ShorebirdMonitoringRecord:
       self.start_time = start_time
       self.species_code = species_code
       self.count = count
+
+   # --------------------------
+   # Accessor (Getter) Methods
+   # --------------------------
 
    # Accessors (getters) named after column names
    def get_site_identification(self):
@@ -73,6 +96,11 @@ class ShorebirdMonitoringRecord:
 
    def get_count(self):
       return self.count
+
+      
+   # --------------------------
+   # Mutator (Setter) Methods
+   # --------------------------
 
    # Mutators (setters) named after column names
    # self indicates THIS object
@@ -94,12 +122,22 @@ class ShorebirdMonitoringRecord:
    def set_count(self, count):
       self.count = count
 
-   # A class method to display column headers of the dataset
-   # Uses class-level data instead of object data, belongs to the class itself
-   # Does not need an object to exist
-   # Using left-align text "<"
+
+   # -------------------------
+   # Display Methods
+   # --------------------------   
+
    @classmethod
    def display_header(cls):
+      """
+      A class method to display column headers of the dataset.
+      
+      Uses class-level data instead of object data, belongs to the class itself
+      Does not need an object to exist. Using left-align text "<".
+
+      Returns: 
+         str: Formatted column header string
+      """
       return(
          f"{cls.COL_SITE_IDENTIFICATION:<20} | " +
          f"{cls.COL_AREA:<5} | " +
@@ -111,6 +149,15 @@ class ShorebirdMonitoringRecord:
    
    # A method to display record data from the dataset
    def display_record(self):
+      """
+      Returns a formatted string containing this record's data.
+
+      Uses fixed-width, left-aligned formatting to ensure
+      tabular output is aligned with the column headers.
+
+      Returns:
+         str: Formatted record string
+      """
       return(
          f"{self.site_identification:<20} | "
          f"{self.area:<5} | "

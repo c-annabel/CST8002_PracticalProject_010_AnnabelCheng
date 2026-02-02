@@ -1,5 +1,5 @@
 """
-Docstring for FileHandler.py of Practical Project 1
+Docstring for file_handler.py of Practical Project 1
 
 Course: CST8002 Section 010
 Professor: Stanley Pieda
@@ -7,7 +7,9 @@ Professor: Stanley Pieda
 Author: Annabel Cheng
 Student ID: 041146557
 
-Description: The program handles file reading operations. 
+Description: 
+This module provides file input operations for reading the dataset 
+and converting each row into record objects.
 
 Version: Python 3.14.2
 Date: 2026.02.01
@@ -33,24 +35,45 @@ class FileHandler:
     """
         Provides file input/output operations for the assigned file.
         Return a list of ShorebirdMonitoringRecord objects.
+
+        Responsibilities:
+        - Open and read the CSV file using File-IO
+        - Parse each CSV row into individual data elements
+        - Create ShorebirdMonitoringRecord objects
+        - Store record objects in a list
+        - Return the list of records and a total record count
     """
 
     def read_file(self, filename, limit=10):      
         
-        #Reads the contents of a file and returns it as a list
+        """
+        Reads the CSV dataset and returns record objects.
+
+        Parameters:
+            filename (str): Dataset file name.
+            limit (int): Maximum number of records to read from the file.
+                         Default value is 10.
+
+        Returns:
+            tuple:
+                - list[ShorebirdMonitoringRecord]: A list of record objects
+                - int: Total number of records displayed
+        """
         
-        records = [] # create a list container
-        totaldisplay = 0 # count total displayed records
+        records = [] # List container to store record objects
+        totaldisplay = 0 # Counter for total number of displayed records
         
         try:
 
+            # The file is opened using Python File-IO (open)
             # Open the file safely using 'with' to avoid resource leaks
             with open(filename, "r") as f:
                 reader = csv.DictReader(f)
         
-                #Skip French header row
+                #Skip the French header row
                 next(reader)
 
+                # Loop through CSV rows
                 for i, row in enumerate(reader):
                     #enumerate: read items and automatically track their position (index).
                     #row: a dictionary from the CSV, not an object.
@@ -71,19 +94,21 @@ class FileHandler:
                     c5 = row.get(ShorebirdMonitoringRecord.COL_SPECIES_CODE, "").strip()
                     c6 = row.get(ShorebirdMonitoringRecord.COL_COUNT, "").strip()
 
-                    # Create an object and store/append the data in the list
+                    # Create an object and store each part of the data into
+                    # an instance of a record object’s fields,
+                    # then append to the list/data structure. Each row is parsed and initializes one record object
                     record_obj = ShorebirdMonitoringRecord(c1, c2, c3, c4, c5, c6)
                     records.append(record_obj)
                     totaldisplay += 1
-
-
+        
+        # Prevents program crash:
         # Error message when the file is not found
         except FileNotFoundError: 
             print(f"Error: File '{filename}' not found.")
 
-        # Error message when other problems take place
+        # Error message when other or unexpected problemsread errors take place
         except Exception as e:
             print("Reading file error:", e)
 
-
+        # Return the list of records and the total display count
         return records, totaldisplay
