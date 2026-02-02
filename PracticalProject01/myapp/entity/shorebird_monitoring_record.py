@@ -92,7 +92,21 @@ class ShorebirdMonitoringRecord:
    def set_count(self, count):
       self.count = count
 
-   # A method to display record data from the dataset
+   # A class method to display column headers of the dataset
+   # Uses class-level data instead of object data, belongs to the class itself
+   # Does not need an object to exit
+   @classmethod
+   def display_header(cls):
+      return(
+         f"{cls.COL_SITE_IDENTIFICATION} | " +
+         f"{cls.COL_AREA} | " +
+         f"{cls.COL_VISIT_DATE} | " +
+         f"{cls.COL_START_TIME} | " +
+         f"{cls.COL_SPECIES_CODE} | " +
+         f"{cls.COL_COUNT} "
+      )
+   
+      # A method to display record data from the dataset
    def display_record(self):
       return(
          f"{self.COL_SITE_IDENTIFICATION}: {self.site_identification} | "

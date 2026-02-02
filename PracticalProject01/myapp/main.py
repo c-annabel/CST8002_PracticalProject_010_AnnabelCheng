@@ -25,8 +25,10 @@ Reference:
       Available: https://realpython.com/read-write-files-python/. [Accessed 24 1 2026].
 
 """
-# Import the FileHandler class from the file_manager package
+# Import the FileHandler class from the package
 from myapp.file_io.file_handler import FileHandler
+# Import the ShorebirdMonitoringRecord class from the package
+from myapp.entity.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
 
 def main():
@@ -50,13 +52,14 @@ def main():
    while True: 
 
       # Display Title
-      print("\n=============== Shorebird Monitoring Records ===============")
+      print("Shorebird Monitoring Records")
+      print(ShorebirdMonitoringRecord.display_header())
       print("=" * 60)
 
-      for record in records:
-         #record is a new variable created by the loop
-         #records is a list
-         print(record.display_record())
+      # for r in records:
+      #    #r is a new variable created by the loop, represents one object from 
+      #    #  the 'records' list
+      #    print(r.display_record())
 
       print("=" * 60, end="\n")
 
