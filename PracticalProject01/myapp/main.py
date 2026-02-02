@@ -40,7 +40,7 @@ def main():
 
    # Greet the user once at the start
    print(f"\nWelcome, {user_name}!")
-   print("=" * 60, end="\n")
+   print()
 
 
    # Create an instance of FileHandler to handle file reading and writing
@@ -52,19 +52,21 @@ def main():
    while True: 
 
       # Display Title
+      print("\n" +"=" * 80)
       print("Shorebird Monitoring Records")
+      print("-" * 80)
       print(ShorebirdMonitoringRecord.display_header())
-      print("=" * 60)
+      print("-" * 80, end="\n")
 
       # for r in records:
       #    #r is a new variable created by the loop, represents one object from 
       #    #  the 'records' list
       #    print(r.display_record())
 
-      print("=" * 60, end="\n")
+      print("=" * 80, end="\n")
 
       # Ask user if they want to exit the program
-      exit = input("Would you like to exit the program? (y/n)").strip()
+      exit = input("\nWould you like to exit the program? (y/n): ").strip()
 
       # Exit the program
       if exit == "y":
@@ -77,8 +79,8 @@ if __name__ == "__main__":
    main()
 
 # signoff info
-print ("=============================================================") #Divider
+print ("=" * 80) #Divider
 print ("Message: Fundamental Python program for Practical Project 1") #Show main message.
 print ("Version: Python 3.14.2")    #Show programming language used, and version.
 print ("Author:  Annabel Cheng")    #show author's name as seen in ACSIS
-print ("=============================================================\n") #Divider
+print ("=" * 80, end="\n") #Divider
