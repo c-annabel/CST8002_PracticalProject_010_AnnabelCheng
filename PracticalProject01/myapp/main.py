@@ -36,46 +36,39 @@ def main():
    user_name = "Annabel Cheng"
    filename = "pacific_rim_npr_coastalmarine_migratory_shorebird_habitat_use_2011-2017_data.csv"
 
-   # Create an instance of FileHandler to handle file reading and writing
-   fm = FileHandler()
-
    # Greet the user once at the start
    print(f"\nWelcome, {user_name}!")
+   print("=" * 60, end="\n")
+
+
+   # Create an instance of FileHandler to handle file reading and writing
+   fh = FileHandler()
+   # Call FileHandler to read file content
+   records = fh.read_file(filename)
 
    # Start the main loop
    while True: 
-      # Display main options
-      print("\n------ File I/O main ------")
-      print("1. Read a file")
-      print("2. Write a file")
-      print("3. Exit")
-      print("---------------------------\n")
-      # Ask user for main choice
-      choice = input("Enter your choice (1-3): ").strip()
 
-      # Option 1: Read a file
-      if choice == "1": 
-         # Call FileHandler to read file content
-         content = fm.read_file(filename)
-         # Display file content
-         print("\n------ File Content ------")
-         print(content)
-      
-      # Option 2: Write a file
-      elif choice == "2": 
-         text = input("\nEnter the info to write: ").strip()
-         # Call FileHandler to write the text to file
-         fm.write_file(filename, text)
+      # Display Title
+      print("\n=============== Shorebird Monitoring Records ===============")
+      print("=" * 60)
 
-      # Option 3: Exit the program
-      elif choice == "3":
-         print(f"Goodbye, {user_name}!\n")
+      for record in records:
+         #record is a new variable created by the loop
+         #records is a list
+         print(record.display_record())
+
+      print("=" * 60, end="\n")
+
+      # Ask user if they want to exit the program
+      exit = input("Would you like to exit the program? (y/n)").strip()
+
+      # Exit the program
+      if exit == "y":
+         print(f"\nGoodbye, {user_name}!\n")
          break
 
-      # Invalid input handling
-      else: 
-         print("Invalid choice. Please select 1, 2, or 3.")
-    
+
 # Run the main function only if this script is executed directly
 if __name__ == "__main__":
    main()

@@ -26,9 +26,10 @@ Reference:
 """
 
 import os
+from myapp.entity.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
 class FileHandler: 
-    """Provides file input/output operations for text files."""
+    """Provides file input/output operations for the assigned file."""
 
     def read_file(self, filename: str) -> str:      
         #Reads the contents of a text file and returns it as a string.
