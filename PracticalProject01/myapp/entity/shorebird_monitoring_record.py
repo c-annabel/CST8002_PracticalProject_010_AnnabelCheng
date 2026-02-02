@@ -21,6 +21,8 @@ Reference:
       Available: https://www.w3schools.com/python/python_classes.asp. [Accessed 30 1 2026].
 [2] 	P. S. Foundation, "9. Classes" Python Software Foundation, [Online]. 
       Available: https://docs.python.org/3/tutorial/classes.html. [Accessed 31 1 2026].
+[3] 	W3Schools, "Python String format() Method" W3.CSS, [Online]. 
+      Available: https://www.w3schools.com/python/ref_string_format.asp. [Accessed 1 2 2026]
 
 """
 
@@ -95,24 +97,25 @@ class ShorebirdMonitoringRecord:
    # A class method to display column headers of the dataset
    # Uses class-level data instead of object data, belongs to the class itself
    # Does not need an object to exist
+   # Using left-align text "<"
    @classmethod
    def display_header(cls):
       return(
-         f"{cls.COL_SITE_IDENTIFICATION} | " +
-         f"{cls.COL_AREA} | " +
-         f"{cls.COL_VISIT_DATE} | " +
-         f"{cls.COL_START_TIME} | " +
-         f"{cls.COL_SPECIES_CODE} | " +
-         f"{cls.COL_COUNT} "
+         f"{cls.COL_SITE_IDENTIFICATION:<20} | " +
+         f"{cls.COL_AREA:<5} | " +
+         f"{cls.COL_VISIT_DATE:<12} | " +
+         f"{cls.COL_START_TIME:<12} | " +
+         f"{cls.COL_SPECIES_CODE:<13} | " +
+         f"{cls.COL_COUNT:<5} "
       )
    
    # A method to display record data from the dataset
    def display_record(self):
       return(
-         f"{self.site_identification} | "
-         f"{self.area} | "
-         f"{self.visit_date} | "
-         f"{self.start_time} | "
-         f"{self.species_code} | "
-         f"{self.count}."
+         f"{self.site_identification:<20} | "
+         f"{self.area:<5} | "
+         f"{self.visit_date:<12} | "
+         f"{self.start_time:<12} | "
+         f"{self.species_code:<13} | "
+         f"{self.count:<5}"
       )

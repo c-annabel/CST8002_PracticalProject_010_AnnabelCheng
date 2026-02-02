@@ -7,7 +7,7 @@ Professor: Stanley Pieda
 Author: Annabel Cheng
 Student ID: 041146557
 
-Description: The program handles reading / writing operations. 
+Description: The program handles file reading operations. 
 
 Version: Python 3.14.2
 Date: 2026.02.01
@@ -18,46 +18,72 @@ https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main
 Reference: 
 [1] 	W3Schools, "Python File Open," W3.CSS, [Online]. 
       Available: https://www.w3schools.com/python/python_file_handling.asp. [Accessed 24 1 2026].
-[2] 	P. S. Foundation, "Input and Output," Python Software Foundation, [Online]. 
-      Available: https://docs.python.org/3/tutorial/inputoutput.html. [Accessed 24 1 2026].
-[3] 	J. Mertz, "Reading and Writing Files in Python (Guide)," DevCademy Media Inc. , [Online]. 
-      Available: https://realpython.com/read-write-files-python/. [Accessed 24 1 2026].
+[2] 	P. S. Foundation, "Built-in Functions" Python Software Foundation, [Online]. 
+      Available: https://docs.python.org/3/library/functions.html#enumerate. [Accessed 31 1 2026].
+[3] 	P. S. Foundation, "csv — CSV File Reading and Writing" Python Software Foundation, [Online]. 
+      Available: https://docs.python.org/3/library/csv.html. [Accessed 31 1 2026].
 
 """
 
-import os
+import csv #a built-in Python Library, designed to read CSV files row by row
+           #it splits each row into columns
 from myapp.entity.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
 class FileHandler: 
-    """Provides file input/output operations for the assigned file."""
+    """
+        Provides file input/output operations for the assigned file.
+        Return a list of ShorebirdMonitoringRecord objects.
+    """
 
-    def read_file(self, filename: str) -> str:      
-        #Reads the contents of a text file and returns it as a string.
-        #checks file existence.
-
-
-        # Check if the file exists; if not, return a message
-        if not os.path.exists(filename):
-            return f"File '{filename}' does not exist."
+    def read_file(self, filename, limit=10):      
         
-        # Open the file safely using 'with' to avoid resource leaks
-        with open(filename, "r") as f:
-            return f.read()
+        #Reads the contents of a file and returns it as a list
         
-    def write_file(self, filename: str, text: str) -> None:      
-        #Writes the given text to a file.
-        #checks if the file exists, and asks for overwrite confirmation.
-        #If the user chooses not to overwrite, appends the text on a new line.
+        records = [] # create a list container
+        totaldisplay = 0 # count total displayed records
+        
+        try:
+
+            # Open the file safely using 'with' to avoid resource leaks
+            with open(filename, "r") as f:
+                reader = csv.DictReader(f)
+        
+                #Skip French header row
+                next(reader)
+
+                for i, row in enumerate(reader):
+                    #enumerate: read items and automatically track their position (index).
+                    #row: a dictionary from the CSV, not an object.
+
+                    #Skip French header row
+                    # if i == 0:
+                    #     continue
+
+                    #Limit the number of records to show for easy presentation
+                    if i >= limit:
+                        break
+
+                    # Separate record into separate data items using column names
+                    c1 = row.get(ShorebirdMonitoringRecord.COL_SITE_IDENTIFICATION, "").strip()
+                    c2 = row.get(ShorebirdMonitoringRecord.COL_AREA, "").strip()
+                    c3 = row.get(ShorebirdMonitoringRecord.COL_VISIT_DATE, "").strip()
+                    c4 = row.get(ShorebirdMonitoringRecord.COL_START_TIME, "").strip()
+                    c5 = row.get(ShorebirdMonitoringRecord.COL_SPECIES_CODE, "").strip()
+                    c6 = row.get(ShorebirdMonitoringRecord.COL_COUNT, "").strip()
+
+                    # Create an object and store/append the data in the list
+                    record_obj = ShorebirdMonitoringRecord(c1, c2, c3, c4, c5, c6)
+                    records.append(record_obj)
+                    totaldisplay += 1
 
 
-        # Check if the file already exists
-        if os.path.exists(filename):
+        # Error message when the file is not found
+        except FileNotFoundError: 
+            print(f"Error: File '{filename}' not found.")
 
-            #if user chooses Not to overwrite, append text to the end
-               with open(filename, "a") as f:
-                  f.write("\n"+text) # Add newline before appending
-                  print(f"\nText added to '{filename}' successfully.\n")
-               return # Exit function after appending
-      
+        # Error message when other problems take place
+        except Exception as e:
+            print("Reading file error:", e)
 
-      
+
+        return records, totaldisplay

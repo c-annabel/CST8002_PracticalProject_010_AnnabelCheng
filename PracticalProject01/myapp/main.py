@@ -21,8 +21,6 @@ Reference:
       Available: https://www.w3schools.com/python/python_file_handling.asp. [Accessed 24 1 2026].
 [2] 	P. S. Foundation, "Input and Output," Python Software Foundation, [Online]. 
       Available: https://docs.python.org/3/tutorial/inputoutput.html. [Accessed 24 1 2026].
-[3] 	J. Mertz, "Reading and Writing Files in Python (Guide)," DevCademy Media Inc. , [Online]. 
-      Available: https://realpython.com/read-write-files-python/. [Accessed 24 1 2026].
 
 """
 # Import the FileHandler class from the package
@@ -30,6 +28,7 @@ from myapp.file_io.file_handler import FileHandler
 # Import the ShorebirdMonitoringRecord class from the package
 from myapp.entity.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
+sep_line_width = 85
 
 def main():
    """Displays a looped main for file i/o operations."""
@@ -37,6 +36,7 @@ def main():
    # Store user name to display in the main
    user_name = "Annabel Cheng"
    filename = "pacific_rim_npr_coastalmarine_migratory_shorebird_habitat_use_2011-2017_data.csv"
+
 
    # Greet the user once at the start
    print(f"\nWelcome, {user_name}!")
@@ -46,24 +46,29 @@ def main():
    # Create an instance of FileHandler to handle file reading and writing
    fh = FileHandler()
    # Call FileHandler to read file content
-   records = fh.read_file(filename)
+   records, totaldisplay = fh.read_file(filename)
 
    # Start the main loop
    while True: 
 
       # Display Title
-      print("\n" +"=" * 80)
+      print("\n" +"=" * sep_line_width)
       print("Shorebird Monitoring Records")
-      print("-" * 80)
+      print("-" * sep_line_width)
+      # Another way to have a separator line to match exactly the header:
+      # print("-" * len(ShorebirdMonitoringRecord.display_header()))
       print(ShorebirdMonitoringRecord.display_header())
-      print("-" * 80, end="\n")
+      print("-" * sep_line_width, end="\n")
 
-      # for r in records:
-      #    #r is a new variable created by the loop, represents one object from 
-      #    #  the 'records' list
-      #    print(r.display_record())
+      # Loop through the list of records and print each one
+      for r in records:
+         # r is a new variable created by the loop, represents one object from 
+         #      the 'records' list
+         print(r.display_record())
 
-      print("=" * 80, end="\n")
+      print("-" * sep_line_width, end="\n")
+      print(f"Total records displayed: {totaldisplay}")
+      print("=" * sep_line_width, end="\n")
 
       # Ask user if they want to exit the program
       exit = input("\nWould you like to exit the program? (y/n): ").strip()
@@ -79,8 +84,8 @@ if __name__ == "__main__":
    main()
 
 # signoff info
-print ("=" * 80) #Divider
+print ("=" * sep_line_width) #Divider
 print ("Message: Fundamental Python program for Practical Project 1") #Show main message.
 print ("Version: Python 3.14.2")    #Show programming language used, and version.
 print ("Author:  Annabel Cheng")    #show author's name as seen in ACSIS
-print ("=" * 80, end="\n") #Divider
+print ("=" * sep_line_width, end="\n") #Divider
