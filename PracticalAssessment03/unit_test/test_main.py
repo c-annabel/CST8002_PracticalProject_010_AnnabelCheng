@@ -28,7 +28,7 @@ Reference:
 """
 
 #import the tested module/function
-from main import pinapple_discount
+from myapp.main import pinapple_discount
 
 def test_discount_pass():
     """
