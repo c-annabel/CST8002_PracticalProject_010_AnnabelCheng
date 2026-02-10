@@ -10,7 +10,7 @@ Student ID: 041146557
 Description: This program applies fundamental concepts such as variables, methods, loops, file I/O, 
              exception handling, libraries, and array-like data structures.
 
-Version: Python 3.14.2
+Version: Python 3.14.2, pip 26.0.1, pytest 9.0.2
 Date: 2026.02.15
 
 GitHub Repo: 
