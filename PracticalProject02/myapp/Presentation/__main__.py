@@ -31,7 +31,7 @@ Reference:
 # Import the FileHandler class  to perform file input operations
 from myapp.file_io.file_handler import FileHandler
 # Import the ShorebirdMonitoringRecord entity class from the package
-from myapp.entity.shorebird_monitoring_record import ShorebirdMonitoringRecord
+from myapp.Model.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
 # Constant defining the width of separator lines used in output formatting
 sep_line_width = 85

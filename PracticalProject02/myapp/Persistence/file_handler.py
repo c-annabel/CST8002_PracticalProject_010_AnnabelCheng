@@ -32,7 +32,7 @@ Reference:
 
 import csv #a built-in Python Library, designed to read CSV files row by row
            #it splits each row into columns
-from myapp.entity.shorebird_monitoring_record import ShorebirdMonitoringRecord
+from myapp.Model.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
 class FileHandler: 
     """
