@@ -11,16 +11,21 @@ Description: This program applies fundamental concepts such as variables, method
              exception handling, libraries, and array-like data structures.
 
 Version: Python 3.14.2, pip 26.0.1, pytest 9.0.2
-Date: 2026.02.15
+Date: 2026.02.20
 
 GitHub Repo: 
 https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject02
 
 Reference: 
-[1] 	W3Schools, "Python File Open," W3.CSS, [Online]. 
-      Available: https://www.w3schools.com/python/python_file_handling.asp. [Accessed 24 1 2026].
-[2] 	P. S. Foundation, "Input and Output," Python Software Foundation, [Online]. 
-      Available: https://docs.python.org/3/tutorial/inputoutput.html. [Accessed 24 1 2026].
+[1] Holger Krekel and Pytest-Dev Team. (n.d.). Pytest: Helps you write better programs. 
+    Pytest Documentation. [Online]. Available at: https://docs.pytest.org/en/stable [Accessed: Feb. 9, 2026].
+[2] Python Software Foundation. (n.d.). Unittest — Unit testing framework. 
+    Python Documentation. [Online]. Available at: https://docs.python.org/3/library/unittest.html [Accessed: Feb. 9, 2026].
+[3] Tech With Tim. (Feb. 25, 2025). Please learn how to write tests in Python: Pytest tutorial. 
+    YouTube. [Online]. Available at: https://www.youtube.com/watch?v=EgpLj86ZHFQ [Accessed: Feb. 9, 2026].
+[4] Parks Canada. (Oct. 1, 2017). Migratory Shorebird Habitat Use - Pacific Rim. 
+    open.canada.ca. [Online]. Available at: https://open.canada.ca/data/en/dataset/e0aa39b6-67c0-4863-bdad-d74e73870697 
+    [Accessed: Feb. 18, 2026].
 
 """
 # Import the FileHandler class  to perform file input operations
@@ -103,7 +108,7 @@ if __name__ == "__main__":
 
 # signoff info (Display your full name on screen so it always remains visible.)
 print ("=" * sep_line_width) #Divider
-print ("Message: Fundamental Python program for Practical Project 1") #Show main message.
+print ("Message: Fundamental Python program for Practical Project 2") #Show main message.
 print ("Version: Python 3.14.2")    #Show programming language used, and version.
 print ("Author:  Annabel Cheng")    #show author's name as seen in ACSIS
 print ("=" * sep_line_width, end="\n") #Divider
