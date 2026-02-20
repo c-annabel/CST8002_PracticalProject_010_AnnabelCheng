@@ -17,14 +17,14 @@ GitHub Repo:
 https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject02
 
 Reference: 
-[1] Holger Krekel and Pytest-Dev Team. (n.d.). Pytest: Helps you write better programs. 
-    Pytest Documentation. [Online]. Available at: https://docs.pytest.org/en/stable [Accessed: Feb. 9, 2026].
-[2] Python Software Foundation. (n.d.). Unittest — Unit testing framework. 
-    Python Documentation. [Online]. Available at: https://docs.python.org/3/library/unittest.html [Accessed: Feb. 9, 2026].
-[3] Tech With Tim. (Feb. 25, 2025). Please learn how to write tests in Python: Pytest tutorial. 
-    YouTube. [Online]. Available at: https://www.youtube.com/watch?v=EgpLj86ZHFQ [Accessed: Feb. 9, 2026].
-[4] Parks Canada. (Oct. 1, 2017). Migratory Shorebird Habitat Use - Pacific Rim. 
-    open.canada.ca. [Online]. Available at: https://open.canada.ca/data/en/dataset/e0aa39b6-67c0-4863-bdad-d74e73870697 
+[1] W3Schools. (n.d.). Python File Open. Refsnes Data. [Online]. 
+    Available at: https://www.w3schools.com/python/python_file_handling.asp
+    [Accessed: Jan. 24, 2026].
+[2] Python Software Foundation. (n.d.). Input and Output. Python Software Foundation. [Online]. 
+    Available at: https://docs.python.org/3/tutorial/inputoutput.html
+    [Accessed: Jan. 24, 2026].
+[3] Parks Canada. (Oct. 1, 2017). Migratory Shorebird Habitat Use - Pacific Rim. open.canada.ca. [Online]. 
+    Available at: https://open.canada.ca/data/en/dataset/e0aa39b6-67c0-4863-bdad-d74e73870697 
     [Accessed: Feb. 18, 2026].
 
 """
