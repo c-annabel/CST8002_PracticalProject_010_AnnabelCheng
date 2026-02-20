@@ -29,26 +29,33 @@ Reference:
 from myapp.persistence.file_handler import FileHandler
 
 
-class RecordStorage():
+class RecordStorage:
 
    """
-   Main function of the program in Business layer.
+    Business layer class that stores records in memory and provides access operations.
 
-   This function:
-   - holds records in memory and provides domain operation.
+    Responsibilities:
+    - Load records from persistence layer
+    - Maintain sequential data structure (list)
+    - Provide record access to presentation layer
 
    """
-
+   # Constructor
    def __init__(self):
-      self._records = [] #sequential list in memory
-      self._total_loaded = 0
+      self._records = []       #sequential list in memory
+      self._total_loaded = 0   # number of records loaded
 
+   # Loading method
    def load_from_data(self, filename, limit=10):
+      """Loads records from the persistence layer."""
       repo = FileHandler()
       self._records, self._total_loaded = repo.read_file(filename, limit)
 
+   # Getters
    def get_records(self):
+      """Returns all stored record objects."""
       return self._records
    
    def get_total_loaded(self):
+      """Returns number of loaded records."""
       return self._total_loaded
