@@ -1,5 +1,5 @@
 """
-Docstring for data_structure_in_memory.py of Practical Project 2
+Docstring for record_memory_story.py of Practical Project 2
 
 Course: CST8002 Section 010
 Professor: Stanley Pieda
