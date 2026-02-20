@@ -9,6 +9,7 @@ Student ID: 041146557
 
 Description: This program creates an entity class under Model and uses the column names from the dataset
              as a reference for names of constants, variables, and accessors/mutators.
+             Re-use the record object from PP1. 
 
 Version: Python 3.14.2
 Date: 2026.02.19
