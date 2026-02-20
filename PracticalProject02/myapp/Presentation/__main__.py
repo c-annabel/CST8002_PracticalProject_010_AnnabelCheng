@@ -29,9 +29,9 @@ Reference:
 
 """
 # Import the FileHandler class  to perform file input operations
-from myapp.file_io.file_handler import FileHandler
+from myapp.persistence.file_handler import FileHandler
 # Import the ShorebirdMonitoringRecord entity class from the package
-from myapp.Model.shorebird_monitoring_record import ShorebirdMonitoringRecord
+from myapp.model.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
 # Constant defining the width of separator lines used in output formatting
 sep_line_width = 85
@@ -109,6 +109,6 @@ if __name__ == "__main__":
 # signoff info (Display your full name on screen so it always remains visible.)
 print ("=" * sep_line_width) #Divider
 print ("Message: Fundamental Python program for Practical Project 2") #Show main message.
-print ("Version: Python 3.14.2")    #Show programming language used, and version.
+print ("Version: Python 3.14.2, pip 26.0.1, pytest 9.0.2")    #Show programming language used, and version.
 print ("Author:  Annabel Cheng")    #show author's name as seen in ACSIS
 print ("=" * sep_line_width, end="\n") #Divider
