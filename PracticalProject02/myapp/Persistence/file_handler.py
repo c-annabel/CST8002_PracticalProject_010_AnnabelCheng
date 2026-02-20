@@ -18,15 +18,21 @@ GitHub Repo:
 https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject02
 
 Reference: 
-[1] Holger Krekel and Pytest-Dev Team. (n.d.). Pytest: Helps you write better programs. 
-    Pytest Documentation. [Online]. Available at: https://docs.pytest.org/en/stable [Accessed: Feb. 9, 2026].
-[2] Python Software Foundation. (n.d.). Unittest — Unit testing framework. 
-    Python Documentation. [Online]. Available at: https://docs.python.org/3/library/unittest.html [Accessed: Feb. 9, 2026].
-[3] Tech With Tim. (Feb. 25, 2025). Please learn how to write tests in Python: Pytest tutorial. 
-    YouTube. [Online]. Available at: https://www.youtube.com/watch?v=EgpLj86ZHFQ [Accessed: Feb. 9, 2026].
-[4] Parks Canada. (Oct. 1, 2017). Migratory Shorebird Habitat Use - Pacific Rim. 
+
+
+[1] Parks Canada. (Oct. 1, 2017). Migratory Shorebird Habitat Use - Pacific Rim. 
     open.canada.ca. [Online]. Available at: https://open.canada.ca/data/en/dataset/e0aa39b6-67c0-4863-bdad-d74e73870697 
     [Accessed: Feb. 18, 2026].
+[2] W3Schools. (n.d.). Python File Open. W3.CSS. [Online]. 
+    Available at: https://www.w3schools.com/python/python_file_handling.asp.
+    [Accessed: Jan. 24, 2026]
+[4] Python Software Foundation. (n.d.). Built-in Functions. Python Software Foundation. [Online]. 
+    Available at: https://docs.python.org/3/library/functions.html#enumerate.
+    [Accessed: Jan. 31, 2026]
+[4] Python Software Foundation. (n.d.). csv — CSV File Reading and Writing. Python Software Foundation. [Online]. 
+    Available at: https://docs.python.org/3/library/csv.html.
+    [Accessed: Jan. 31, 2026]
+
 
 """
 
@@ -36,6 +42,7 @@ from myapp.model.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
 class FileHandler: 
     """
+        Persistence layer responsible for CSV File-IO operations.
         Provides file input/output operations for the assigned file.
         Return a list of ShorebirdMonitoringRecord objects.
 
@@ -70,20 +77,16 @@ class FileHandler:
 
             # The file is opened using Python File-IO (open)
             # Open the file safely using 'with' to avoid resource leaks
-            with open(filename, "r") as f:
+            with open(filename, mode="r", newline="", encoding="latin-1") as f:  #for csv doc
                 reader = csv.DictReader(f)
         
                 #Skip the French header row
-                next(reader)
+                next(reader, None)  #with None, if file is empty, prevents StopIteration crash. 
 
                 # Loop through CSV rows
                 for i, row in enumerate(reader):
                     #enumerate: read items and automatically track their position (index).
                     #row: a dictionary from the CSV, not an object.
-
-                    #Skip French header row
-                    # if i == 0:
-                    #     continue
 
                     #Limit the number of records to show for easy presentation
                     if i >= limit:
@@ -109,7 +112,7 @@ class FileHandler:
         except FileNotFoundError: 
             print(f"Error: File '{filename}' not found.")
 
-        # Error message when other or unexpected problemsread errors take place
+        # Error message when other unexpected read errors take place
         except Exception as e:
             print("Reading file error:", e)
 
