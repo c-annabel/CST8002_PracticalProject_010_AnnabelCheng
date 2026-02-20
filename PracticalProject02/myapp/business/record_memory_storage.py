@@ -46,7 +46,7 @@ class RecordStorage:
       self._total_loaded = 0   # number of records loaded
 
    # Loading method
-   def load_from_data(self, filename, limit=10):
+   def load_from_data(self, filename, limit=100):
       """Loads records from the persistence layer."""
       repo = FileHandler()
       self._records, self._total_loaded = repo.read_file(filename, limit)

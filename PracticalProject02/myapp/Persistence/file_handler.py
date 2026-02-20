@@ -54,7 +54,7 @@ class FileHandler:
         - Return the list of records and a total record count
     """
 
-    def read_file(self, filename, limit=10):      
+    def read_file(self, filename, limit):      
         
         """
         Reads the CSV dataset and returns record objects.
@@ -62,7 +62,7 @@ class FileHandler:
         Parameters:
             filename (str): Dataset file name.
             limit (int): Maximum number of records to read from the file.
-                         Default value is 10.
+                         Default value is 100.
 
         Returns:
             tuple:
@@ -87,6 +87,7 @@ class FileHandler:
                 for i, row in enumerate(reader):
                     #enumerate: read items and automatically track their position (index).
                     #row: a dictionary from the CSV, not an object.
+                    #will stop naturally when file ends. (if less than 100 records)
 
                     #Limit the number of records to show for easy presentation
                     if i >= limit:
