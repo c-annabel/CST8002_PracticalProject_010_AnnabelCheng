@@ -15,7 +15,7 @@ Version: Python 3.14.2
 Date: 2026.02.19
 
 GitHub Repo: 
-https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject01
+https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject02
 
 Reference: 
 [1] Holger Krekel and Pytest-Dev Team. (n.d.). Pytest: Helps you write better programs. 
@@ -32,7 +32,7 @@ Reference:
 
 import csv #a built-in Python Library, designed to read CSV files row by row
            #it splits each row into columns
-from myapp.Model.shorebird_monitoring_record import ShorebirdMonitoringRecord
+from myapp.model.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
 class FileHandler: 
     """
