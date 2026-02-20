@@ -7,14 +7,14 @@ Professor: Stanley Pieda
 Author: Annabel Cheng
 Student ID: 041146557
 
-Description: This program creates an entity class and uses the column names from the dataset
-             as a reference for names of constants, variables, and accessors/mutators. 
+Description: This program creates an entity class under Model and uses the column names from the dataset
+             as a reference for names of constants, variables, and accessors/mutators.
 
 Version: Python 3.14.2
 Date: 2026.02.19
 
 GitHub Repo: 
-https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject01
+https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject02
 
 Reference: 
 [1] Holger Krekel and Pytest-Dev Team. (n.d.). Pytest: Helps you write better programs. 
