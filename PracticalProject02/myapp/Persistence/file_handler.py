@@ -26,7 +26,7 @@ Reference:
 [2] W3Schools. (n.d.). Python File Open. W3.CSS. [Online]. 
     Available at: https://www.w3schools.com/python/python_file_handling.asp.
     [Accessed: Jan. 24, 2026]
-[4] Python Software Foundation. (n.d.). Built-in Functions. Python Software Foundation. [Online]. 
+[3] Python Software Foundation. (n.d.). Built-in Functions. Python Software Foundation. [Online]. 
     Available at: https://docs.python.org/3/library/functions.html#enumerate.
     [Accessed: Jan. 31, 2026]
 [4] Python Software Foundation. (n.d.). csv — CSV File Reading and Writing. Python Software Foundation. [Online]. 

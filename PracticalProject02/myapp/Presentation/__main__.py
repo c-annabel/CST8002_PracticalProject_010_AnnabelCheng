@@ -28,10 +28,11 @@ Reference:
     [Accessed: Feb. 18, 2026].
 
 """
-# Import the FileHandler class  to perform file input operations
-from myapp.persistence.file_handler import FileHandler
+
 # Import the ShorebirdMonitoringRecord entity class from the package
 from myapp.model.shorebird_monitoring_record import ShorebirdMonitoringRecord
+# Import the RecordStorage entity class from the package
+from myapp.business.record_memory_storage import RecordStorage
 
 # Constant defining the width of separator lines used in output formatting
 sep_line_width = 85
@@ -62,11 +63,15 @@ def main():
    print(f"\nWelcome, {user_name}!")
    print()
 
+   # Create business layer storage
+   storage = RecordStorage()
+   # Load records through business layer (not persistence directly)
+   storage.load_from_data(filename)
 
-   # Create an instance of FileHandler to handle file reading 
-   fh = FileHandler()
-   # Read the file and retrieve record objects and display count
-   records, totaldisplay = fh.read_file(filename)
+   records = storage.get_records()
+   totaldisplay = storage.get_total_loaded()
+
+
 
    # Start the main program loop (allows repeated viewing until user exits)
    while True: 
