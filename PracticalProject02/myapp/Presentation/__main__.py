@@ -58,6 +58,8 @@ def main():
    # Dataset filename
    filename = "pacific_rim_npr_coastalmarine_migratory_shorebird_habitat_use_2011-2017_data.csv"
 
+   #number of records displayed
+   limit = 100
 
    # Greet the user at program startup
    print(f"\nWelcome, {user_name}!")
@@ -66,18 +68,17 @@ def main():
    # Create business layer storage
    storage = RecordStorage()
    # Load records through business layer (not persistence directly)
-   storage.load_from_data(filename)
+   storage.load_from_data(filename, limit)
 
    records = storage.get_records()
    totaldisplay = storage.get_total_loaded()
-
 
 
    # Start the main program loop (allows repeated viewing until user exits)
    while True: 
 
       # Display menu options
-      print("----------- Practical Project 2 Menu -----------")
+      print("\n************ Practical Project 2 Menu ************")
       print("1. Reload data")
       print("2. Save data to a new csv file (UUID filename)")
       print("3. Display records")
@@ -85,39 +86,49 @@ def main():
       print("5. Edit record")
       print("6. Delete record")
       print("7. Exit")
-      print("------------------------------------------------\n")
+      print("*" * 50, end="\n")
       # Ask user for menu choice
       choice = input("Enter your choice (1-7): ").strip()
 
-      # Display Title and table header
-      print("\n" +"=" * sep_line_width)
-      print("Shorebird Monitoring Records")
-      print("-" * sep_line_width)
-      # Another way to have a separator line to match exactly the header:
-      # print("-" * len(ShorebirdMonitoringRecord.display_header()))
-      # Display dataset column headers
-      print(ShorebirdMonitoringRecord.display_header())
       print("-" * sep_line_width, end="\n")
 
-      # Loop through the list of records and print each one
-      for r in records:
-         # r is a new variable created by the loop, represents one object from 
-         #      the 'records' list
-         # Output the record data on screen.
-         print(r.display_record())
+      if choice == "1":
+         storage.load_from_data(filename, limit)
+         print(f"Reloaded {limit} records.")
+         print("-" * sep_line_width, end="\n")   
 
-      # Display summary information
-      print("-" * sep_line_width, end="\n")
-      print(f"Total records displayed: {totaldisplay}")
-      print("=" * sep_line_width, end="\n")
+      elif choice == "7":
+            # Exit the program
+            print(f"\nGoodbye, {user_name}!\n")
+            break
 
-      # Ask user if they want to exit the program
-      exit = input("\nWould you like to exit the program? (y/n): ").strip()
+      else:
+         # Display Title and table header
+         print("\n" +"=" * sep_line_width)
+         print("Shorebird Monitoring Records")
+         print("-" * sep_line_width)
+         # Another way to have a separator line to match exactly the header:
+         # print("-" * len(ShorebirdMonitoringRecord.display_header()))
+         # Display dataset column headers
+         print(ShorebirdMonitoringRecord.display_header())
+         print("-" * sep_line_width, end="\n")
 
-      # Exit the program
-      if exit == "y":
-         print(f"\nGoodbye, {user_name}!\n")
-         break
+         # Loop through the list of records and print each one
+         for r in records:
+            # r is a new variable created by the loop, represents one object from 
+            #      the 'records' list
+            # Output the record data on screen.
+            print(r.display_record())
+
+         # Display summary information
+         print("-" * sep_line_width, end="\n")
+         print(f"Total records displayed: {totaldisplay}")
+         print("=" * sep_line_width, end="\n")
+
+         # Ask user if they want to exit the program
+         exit = input("\nWould you like to exit the program? (y/n): ").strip()
+
+
 
 
 # Run the main function only if this script is executed directly

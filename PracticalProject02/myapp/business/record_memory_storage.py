@@ -28,7 +28,6 @@ Reference:
 # Import the FileHandler class  to perform file input operations
 from myapp.persistence.file_handler import FileHandler
 
-
 class RecordStorage:
 
    """
@@ -46,7 +45,7 @@ class RecordStorage:
       self._total_loaded = 0   # number of records loaded
 
    # Loading method
-   def load_from_data(self, filename, limit=100):
+   def load_from_data(self, filename, limit):
       """Loads records from the persistence layer."""
       repo = FileHandler()
       self._records, self._total_loaded = repo.read_file(filename, limit)
