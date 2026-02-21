@@ -80,3 +80,8 @@ class RecordStorage:
       if start > end: return []
       
       return self._records[start:end+1]
+   
+   # Add new record
+   def add_record(self, record):
+      """Adds a new record to in-memory list."""
+      self._records.append(record)

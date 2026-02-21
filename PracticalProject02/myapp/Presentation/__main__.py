@@ -70,14 +70,13 @@ def main():
    # Load records through business layer (not persistence directly)
    storage.load_from_data(filename, limit)
 
-   records = storage.get_records()
-   totaldisplay = storage.get_total_loaded()
-
-   #Last record's index number
-   last_index = len(records) - 1
-
    # Start the main program loop (allows repeated viewing until user exits)
    while True: 
+
+      # Create business layer storage
+      records = storage.get_records()
+      #Last record's index number
+      last_index = len(records) - 1
 
       # Display menu options
       print("\n************ Practical Project 2 Menu ************")
@@ -119,7 +118,7 @@ def main():
                print("-" * sep_line_width, end="\n")  
                continue
 
-            # OPTION 1: Display one record
+            # Display Option 1: Display one record
             if display_type == "1":
                # inner loop for single index
                while True:
@@ -145,7 +144,7 @@ def main():
 
                break
 
-            # OPTION 2: Display multiple records
+            # Display Option 2: Display multiple records
             elif display_type == "2":
                # inner loop for a range
                while True:
@@ -180,6 +179,21 @@ def main():
                      print("Invalid input. Please enter numbers only.") 
 
                break
+      # Option 4 : Add a record
+      elif choice == "4":
+  
+            # Display questions for the new record
+            site = input("Enter Site Identification: ").strip()
+            area = input("Enter Area: ").strip()
+            date = input("Enter Visit Date (DD/MM/YYYY): ").strip()
+            time = input("Enter Sart Time (HH:MM:SS AM/PM): ").strip()
+            code = input("Enter Species Code: ").strip()
+            count = input("Enter Count: ").strip()
+            new_rec = ShorebirdMonitoringRecord(site, area, date, time, code, count)
+            storage.add_record(new_rec)
+
+            print("Added a new record.")
+            print("-" * sep_line_width, end="\n")   
 
       # Option 7: Exit the program
       elif choice == "7":
@@ -191,8 +205,6 @@ def main():
             print("Invalid option!! ")
             continue
       
-
-
 def table_header_display():
       # Display Title and table header
       print("\n" +"=" * sep_line_width)
