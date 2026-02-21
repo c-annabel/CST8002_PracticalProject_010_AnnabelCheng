@@ -59,6 +59,24 @@ class RecordStorage:
       """Returns number of loaded records."""
       return self._total_loaded
    
+   # Save to the new file
    def save_to_new_file(self):
       repo = FileHandler()
       return repo.write_file(self._records)
+   
+   # Get one record by index
+   def get_record_by_index(self, index):
+      """Returns one record by list index or None if invalid."""
+      if 0 <= index < len(self._records):
+         return self._records[index]
+      return None
+   
+   # Get multiple records by index range
+   def get_records_range(self, start, end):
+      """Returns a slice of records from start to end (inclusive end)."""
+      # Second layer of verification
+      if start < 0: start = 0
+      if end >= len(self._records): end = len(self._records) - 1
+      if start > end: return []
+      
+      return self._records[start:end+1]

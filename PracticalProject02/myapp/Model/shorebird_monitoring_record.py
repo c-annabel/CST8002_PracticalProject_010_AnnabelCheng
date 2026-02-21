@@ -147,6 +147,7 @@ class ShorebirdMonitoringRecord:
          str: Formatted column header string
       """
       return(
+         f"{'Index':<6} | " +
          f"{cls.COL_SITE_IDENTIFICATION:<20} | " +
          f"{cls.COL_AREA:<5} | " +
          f"{cls.COL_VISIT_DATE:<12} | " +

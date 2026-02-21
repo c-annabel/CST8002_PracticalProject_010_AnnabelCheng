@@ -35,7 +35,7 @@ from myapp.model.shorebird_monitoring_record import ShorebirdMonitoringRecord
 from myapp.business.record_memory_storage import RecordStorage
 
 # Constant defining the width of separator lines used in output formatting
-sep_line_width = 85
+sep_line_width = 95
 
 def main():
 
@@ -73,6 +73,8 @@ def main():
    records = storage.get_records()
    totaldisplay = storage.get_total_loaded()
 
+   #Last record's index number
+   last_index = len(records) - 1
 
    # Start the main program loop (allows repeated viewing until user exits)
    while True: 
@@ -95,7 +97,7 @@ def main():
       # Option 1 : Reload data
       if choice == "1":
          storage.load_from_data(filename, limit)
-         print(f"Reloaded {limit} records.")
+         print(f"Reloaded {storage.get_total_loaded()} records.")
          print("-" * sep_line_width, end="\n")   
 
       # Option 2 : Save to a new file with UUID file name
@@ -103,7 +105,82 @@ def main():
             new_file = storage.save_to_new_file()
             print(f"Saved to {new_file}.")
             print("-" * sep_line_width, end="\n")   
-               
+
+      # Option 3 : Select record(s) to display
+      elif choice == "3":
+            
+         # Ask user to selection one or multiple records
+         while True:
+            display_type = input("(1) Display one record (2) Display multiple records? ").strip()
+            print("-" * sep_line_width, end="\n")   
+
+            if display_type not in ("1", "2"):
+               print("Invalid option. Please choose 1 or 2.")
+               print("-" * sep_line_width, end="\n")  
+               continue
+
+            # OPTION 1: Display one record
+            if display_type == "1":
+               # inner loop for single index
+               while True:
+                  try: 
+                     record_index = int(input(f"Choose a record index (0-{last_index}): ").strip())
+                     print("-" * sep_line_width, end="\n")  
+
+                     if 0 <= record_index <= last_index:
+                        print(f"You selected record {record_index}.")
+                        print("-" * sep_line_width, end="\n")   
+
+                        table_header_display()
+                        r = storage.get_record_by_index(record_index)
+                        print(f"{record_index:<6} | {r.display_record()}")
+                        table_footer_display(1)
+                        break
+                     else:
+                        print(f"Index must be between 0 and {last_index}.")
+                        print("-" * sep_line_width, end="\n")  
+
+                  except ValueError:
+                     print("Invalid input. Please enter a number.")
+
+               break
+
+            # OPTION 2: Display multiple records
+            elif display_type == "2":
+               # inner loop for a range
+               while True:
+                  try:
+                     record_range_start = int(input(f"Record index start from (0-{last_index}): ").strip())
+                     record_range_end = int(input(f"Record index end with (0-{last_index}): ").strip())
+
+                     if not (0 <= record_range_start <= last_index and 0 <= record_range_end <= last_index):
+                        print(f"Indexes must be between 0 and {last_index}.")
+                        print("-" * sep_line_width, end="\n")  
+                        continue
+
+                     if record_range_end < record_range_start:
+                        print("End index must be greater than or equal to start index.")
+                        print("-" * sep_line_width, end="\n")  
+                        continue
+
+                     print("-" * sep_line_width, end="\n")  
+                     print(f"You selected records from {record_range_start} to {record_range_end}.")
+                     print("-" * sep_line_width, end="\n")   
+                     
+                     table_header_display()
+                     record_range = storage.get_records_range(record_range_start, record_range_end)
+                     record_shown = len(record_range)
+                     for index, r in enumerate(record_range, start = record_range_start):
+                        print(f"{index:<6} | {r.display_record()}")
+                     table_footer_display(record_shown)
+                     
+                     break
+
+                  except ValueError:
+                     print("Invalid input. Please enter numbers only.") 
+
+               break
+
       # Option 7: Exit the program
       elif choice == "7":
             # Exit the program
@@ -111,33 +188,28 @@ def main():
             break
 
       else:
-         # Display Title and table header
-         print("\n" +"=" * sep_line_width)
-         print("Shorebird Monitoring Records")
-         print("-" * sep_line_width)
-         # Another way to have a separator line to match exactly the header:
-         # print("-" * len(ShorebirdMonitoringRecord.display_header()))
-         # Display dataset column headers
-         print(ShorebirdMonitoringRecord.display_header())
-         print("-" * sep_line_width, end="\n")
-
-         # Loop through the list of records and print each one
-         for r in records:
-            # r is a new variable created by the loop, represents one object from 
-            #      the 'records' list
-            # Output the record data on screen.
-            print(r.display_record())
-
-         # Display summary information
-         print("-" * sep_line_width, end="\n")
-         print(f"Total records displayed: {totaldisplay}")
-         print("=" * sep_line_width, end="\n")
-
-         # Ask user if they want to exit the program
-         exit = input("\nWould you like to exit the program? (y/n): ").strip()
+            print("Invalid option!! ")
+            continue
+      
 
 
+def table_header_display():
+      # Display Title and table header
+      print("\n" +"=" * sep_line_width)
+      print("Shorebird Monitoring Records")
+      print("-" * sep_line_width)
+      # Another way to have a separator line to match exactly the header:
+      # print("-" * len(ShorebirdMonitoringRecord.display_header()))
+      # Display dataset column headers
+      print(ShorebirdMonitoringRecord.display_header())
+      print("-" * sep_line_width, end="\n")
 
+
+def table_footer_display(totaldisplay):
+      # Display summary information
+      print("-" * sep_line_width, end="\n")
+      print(f"Total records displayed: {totaldisplay}")
+      print("=" * sep_line_width, end="\n")
 
 # Run the main function only if this script is executed directly
 if __name__ == "__main__":
