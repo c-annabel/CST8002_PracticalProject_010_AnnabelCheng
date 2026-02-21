@@ -96,13 +96,13 @@ def main():
       # Option 1 : Reload data
       if choice == "1":
          storage.load_from_data(filename, limit)
-         print(f"Reloaded {storage.get_total_loaded()} records.")
+         print(f"{user_name}, Reloaded {storage.get_total_loaded()} records.")
          print("-" * sep_line_width, end="\n")   
 
       # Option 2 : Save to a new file with UUID file name
       elif choice == "2":
             new_file = storage.save_to_new_file()
-            print(f"Saved to {new_file}.")
+            print(f"{user_name}, Saved to {new_file}.")
             print("-" * sep_line_width, end="\n")   
 
       # Option 3 : Select record(s) to display
@@ -134,6 +134,7 @@ def main():
                         r = storage.get_record_by_index(record_index)
                         print(f"{record_index:<6} | {r.display_record()}")
                         table_footer_display(1)
+                        print(f"{user_name}, Display completed.")
                         break
                      else:
                         print(f"Index must be between 0 and {last_index}.")
@@ -172,12 +173,13 @@ def main():
                      for index, r in enumerate(record_range, start = record_range_start):
                         print(f"{index:<6} | {r.display_record()}")
                      table_footer_display(record_shown)
-                     
+                     print(f"{user_name}, Display completed.")
                      break
 
                   except ValueError:
                      print("Invalid input. Please enter numbers only.") 
 
+               
                break
       # Option 4 : Add a record
       elif choice == "4":
@@ -192,7 +194,7 @@ def main():
             new_rec = ShorebirdMonitoringRecord(site, area, date, time, code, count)
             storage.add_record(new_rec)
 
-            print("Added a new record.")
+            print(f"{user_name}, Added a new record.")
             print("-" * sep_line_width, end="\n")   
 
       # Option 5 : Edit a record
@@ -240,7 +242,7 @@ def main():
                      )
 
                      if success:
-                        print(f"Record with index {record_index} updated successfully.")
+                        print(f"{user_name}, Record with index [{record_index}] updated successfully.")
                      else:
                         print("Invalid index.")
                      
@@ -254,7 +256,44 @@ def main():
                except ValueError:
                   print("Invalid input. Please enter a number.")
   
+      # Option 6 : Delete a record
+      elif choice == "6":  
+ 
+         while True: 
+            try: 
+               record_index = int(input(f"Choose a record index to delete (0-{last_index}): ").strip())
+               print("-" * sep_line_width, end="\n")  
 
+               if 0 <= record_index <= last_index:
+
+                  table_header_display()
+                  r = storage.get_record_by_index(record_index)
+                  print(f"{record_index:<6} | {r.display_record()}")
+                  print("-" * sep_line_width, end="\n")  
+
+                  confirm = input(f"Are you sure you want to delete this record indexed [{record_index}] (y/n): ").strip().lower()
+                  print("-" * sep_line_width, end="\n")   
+
+                  if confirm == 'y':
+                     # Display questions for editing the requested record
+                     success = storage.delete_record_by_index(record_index)
+
+                     if success:
+                        print(f"{user_name}, Record with index {record_index} deleted successfully.")
+                     else:
+                        print("Invalid index.")
+                  else:      
+                     print(f"{user_name}, Deletion cancelled.")  
+                  
+                  break      
+
+               else:
+                  print(f"{user_name}, Index must be between 0 and {last_index}.")
+            
+            except ValueError:
+               print("Invalid input. Please enter a number.")
+            
+            print("-" * sep_line_width, end="\n")  
 
       # Option 7: Exit the program
       elif choice == "7":

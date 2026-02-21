@@ -138,3 +138,12 @@ class RecordStorage:
          record.set_count(count)
 
       return True
+   
+   # Delete a record
+   def delete_record_by_index(self, index):
+
+      """Deletes a record by index. Returns True if deleted."""
+      if 0 <= index < len(self._records):
+         del self._records[index]
+         return True
+      return False
