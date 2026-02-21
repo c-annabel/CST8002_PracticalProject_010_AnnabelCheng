@@ -93,19 +93,25 @@ def main():
 
       print("-" * sep_line_width, end="\n")
 
+      #====================================================
       # Option 1 : Reload data
+      #====================================================
       if choice == "1":
          storage.load_from_data(filename, limit)
          print(f"{user_name}, Reloaded {storage.get_total_loaded()} records.")
          print("-" * sep_line_width, end="\n")   
 
+      #====================================================
       # Option 2 : Save to a new file with UUID file name
+      #====================================================
       elif choice == "2":
             new_file = storage.save_to_new_file()
             print(f"{user_name}, Saved to {new_file}.")
-            print("-" * sep_line_width, end="\n")   
+            print("-" * sep_line_width, end="\n")  
 
+      #====================================================
       # Option 3 : Select record(s) to display
+      #====================================================
       elif choice == "3":
             
          # Ask user to selection one or multiple records
@@ -184,7 +190,9 @@ def main():
                   except ValueError:
                      print("Invalid input. Please enter numbers only.") 
                break
+      #====================================================
       # Option 4 : Add a record
+      #====================================================
       elif choice == "4":
   
             # Display questions for the new record
@@ -200,7 +208,9 @@ def main():
             print(f"{user_name}, Added a new record.")
             print("-" * sep_line_width, end="\n")   
 
+      #====================================================
       # Option 5 : Edit a record
+      #====================================================
       elif choice == "5":
             
             while True:
@@ -258,8 +268,9 @@ def main():
 
                except ValueError:
                   print("Invalid input. Please enter a number.")
-  
+      #====================================================
       # Option 6 : Delete a record
+      #====================================================
       elif choice == "6":  
  
          while True: 
@@ -297,8 +308,9 @@ def main():
                print("Invalid input. Please enter a number.")
             
             print("-" * sep_line_width, end="\n")  
-
+      #====================================================
       # Option 7: Exit the program
+      #====================================================
       elif choice == "7":
             # Exit the program
             print(f"\nGoodbye, {user_name}!\n")
