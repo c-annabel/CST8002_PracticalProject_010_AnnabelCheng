@@ -1,24 +1,34 @@
 """
+Module: file_handler.py
+
 Docstring for file_handler.py of Practical Project 2
 
-Course: CST8002 Section 010
+Course: CST8002 Section 010 Programming Language Research Project
 Professor: Stanley Pieda
 
 Author: Annabel Cheng
 Student ID: 041146557
 
-Description: 
-This module provides file input operations for reading the dataset 
-and converting each row into record objects.
+Description:
+    This module defines the FileHandler class, which represents
+    the Persistence Layer of the application.
+
+    It is responsible for handling CSV file input and output operations.
+    The class reads dataset rows, converts them into
+    ShorebirdMonitoringRecord objects, and writes in-memory
+    records back to a new CSV file.
+
+Architecture:
+    This module belongs to the Persistence Layer in an N-Layered design.
+    It does not contain business logic or presentation logic.
 
 Version: Python 3.14.2
-Date: 2026.02.19
+Due Date: 2026.02.22
 
 GitHub Repo: 
 https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject02
 
 Reference: 
-
 
 [1] Parks Canada. (Oct. 1, 2017). Migratory Shorebird Habitat Use - Pacific Rim. 
     open.canada.ca. [Online]. Available at: https://open.canada.ca/data/en/dataset/e0aa39b6-67c0-4863-bdad-d74e73870697 
@@ -38,107 +48,136 @@ Reference:
 
 """
 
-import csv #a built-in Python Library, designed to read CSV files row by row
-           #it splits each row into columns
+# Built-in Python library for CSV file processing
+import csv
 
-import uuid #
+# Built-in Python library for generating unique identifiers
+import uuid
 
 from myapp.model.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
-class FileHandler: 
-    """
-        Persistence layer responsible for CSV File-IO operations.
-        Provides file input/output operations for the assigned file.
-        Return a list of ShorebirdMonitoringRecord objects.
 
-        Responsibilities:
-        - Open and read the CSV file using File-IO
-        - Parse each CSV row into individual data elements
-        - Create ShorebirdMonitoringRecord objects
-        - Store record objects in a list
-        - Return the list of records and a total record count
+class FileHandler:
+    """
+    Persistence layer class responsible for CSV file I/O operations.
+
+    Responsibilities:
+        - Open and read CSV files
+        - Parse rows into structured data
+        - Instantiate ShorebirdMonitoringRecord objects
+        - Return list of entity objects
+        - Write in-memory records back to CSV format
+
+    This class does NOT:
+        - Apply business rules
+        - Format display output
+        - Handle user interaction
     """
 
-    def read_file(self, filename, limit):      
-        
+    def read_file(self, filename, limit):
         """
-        Reads the CSV dataset and returns record objects.
+        Reads a CSV dataset file and converts rows into record objects.
 
         Parameters:
-            filename (str): Dataset file name.
-            limit (int): Maximum number of records to read from the file.
-                         Default value is 100.
+            filename (str): Name or path of the CSV file to read.
+            limit (int): Maximum number of records to load into memory.
 
         Returns:
             tuple:
-                - list[ShorebirdMonitoringRecord]: A list of record objects
-                - int: Total number of records displayed
+                - list[ShorebirdMonitoringRecord]:
+                  List of created record objects.
+                - int:
+                  Total number of records successfully loaded.
+
+        Behavior:
+            - Uses csv.DictReader to map column names to values.
+            - Skips the French header row.
+            - Stops reading once limit is reached.
+            - Handles file-not-found and unexpected read errors.
+
+        Exceptions Handled:
+            FileNotFoundError
+            Generic Exception
         """
-        
-        records = [] # List container to store record objects
-        totaldisplay = 0 # Counter for total number of displayed records
-        
+
+        records = []
+        totaldisplay = 0
+
         try:
-
-            # The file is opened using Python File-IO (open)
-            # Open the file safely using 'with' to avoid resource leaks
-            with open(filename, mode="r", newline="", encoding="latin-1") as f:  #for csv doc
+            with open(filename, mode="r", newline="", encoding="latin-1") as f:
                 reader = csv.DictReader(f)
-        
-                #Skip the French header row
-                next(reader, None)  #with None, if file is empty, prevents StopIteration crash. 
 
-                # Loop through CSV rows
+                # Skip optional French header row if present
+                next(reader, None)
+
                 for i, row in enumerate(reader):
-                    #enumerate: read items and automatically track their position (index).
-                    #row: a dictionary from the CSV, not an object.
-                    #will stop naturally when file ends. (if less than 100 records)
 
-                    #Limit the number of records to show for easy presentation
                     if i >= limit:
                         break
 
-                    # Separate record into separate data items using column names
-                    c1 = row.get(ShorebirdMonitoringRecord.COL_SITE_IDENTIFICATION, "").strip()
-                    c2 = row.get(ShorebirdMonitoringRecord.COL_AREA, "").strip()
-                    c3 = row.get(ShorebirdMonitoringRecord.COL_VISIT_DATE, "").strip()
-                    c4 = row.get(ShorebirdMonitoringRecord.COL_START_TIME, "").strip()
-                    c5 = row.get(ShorebirdMonitoringRecord.COL_SPECIES_CODE, "").strip()
-                    c6 = row.get(ShorebirdMonitoringRecord.COL_COUNT, "").strip()
+                    c1 = row.get(
+                        ShorebirdMonitoringRecord.COL_SITE_IDENTIFICATION, ""
+                    ).strip()
+                    c2 = row.get(
+                        ShorebirdMonitoringRecord.COL_AREA, ""
+                    ).strip()
+                    c3 = row.get(
+                        ShorebirdMonitoringRecord.COL_VISIT_DATE, ""
+                    ).strip()
+                    c4 = row.get(
+                        ShorebirdMonitoringRecord.COL_START_TIME, ""
+                    ).strip()
+                    c5 = row.get(
+                        ShorebirdMonitoringRecord.COL_SPECIES_CODE, ""
+                    ).strip()
+                    c6 = row.get(
+                        ShorebirdMonitoringRecord.COL_COUNT, ""
+                    ).strip()
 
-                    # Create an object and store each part of the data into
-                    # an instance of a record object’s fields,
-                    # then append to the list/data structure. Each row is parsed and initializes one record object
-                    record_obj = ShorebirdMonitoringRecord(c1, c2, c3, c4, c5, c6)
+                    record_obj = ShorebirdMonitoringRecord(
+                        c1, c2, c3, c4, c5, c6
+                    )
+
                     records.append(record_obj)
                     totaldisplay += 1
-        
-        # Prevents program crash:
-        # Error message when the file is not found
-        except FileNotFoundError: 
+
+        except FileNotFoundError:
             print(f"Error: File '{filename}' not found.")
 
-        # Error message when other unexpected read errors take place
         except Exception as e:
             print("Reading file error:", e)
 
-        # Return the list of records and the total display count
         return records, totaldisplay
-    
 
-    
     def write_file(self, records):
         """
-        Writes records to a new CSV file using a UUID filename.
-        Returns the created filename.
+        Writes in-memory records to a new CSV file.
+
+        A unique filename is generated using UUID to prevent overwriting
+        existing files.
+
+        Parameters:
+            records (list[ShorebirdMonitoringRecord]):
+                List of record objects to be written.
+
+        Returns:
+            str:
+                Name of the newly created file if successful.
+            None:
+                If writing fails.
+
+        Behavior:
+            - Writes English column headers.
+            - Extracts values using getter methods.
+            - Saves file in UTF-8 encoding.
         """
+
         new_filename = f"shorebird_memory_{uuid.uuid4()}.csv"
 
         try:
             with open(new_filename, mode="w", newline="", encoding="utf-8") as f:
                 writer = csv.writer(f)
 
-                # Header row (English)
                 writer.writerow([
                     ShorebirdMonitoringRecord.COL_SITE_IDENTIFICATION,
                     ShorebirdMonitoringRecord.COL_AREA,
@@ -148,7 +187,6 @@ class FileHandler:
                     ShorebirdMonitoringRecord.COL_COUNT
                 ])
 
-                # Data rows
                 for r in records:
                     writer.writerow([
                         r.get_site_identification(),

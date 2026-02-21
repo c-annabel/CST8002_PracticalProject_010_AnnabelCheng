@@ -1,17 +1,31 @@
 """
+Module: __main__.py
+
 Docstring for __main__.py of Practical Project 2
 
-Course: CST8002 Section 010
+Course: CST8002 Section 010 Programming Language Research Project
 Professor: Stanley Pieda
 
 Author: Annabel Cheng
 Student ID: 041146557
 
-Description: This program applies fundamental concepts such as variables, methods, loops, file I/O, 
-             exception handling, libraries, and array-like data structures.
+Description: 
+    This module represents the Presentation Layer of the application.
+    It provides the user interface, menu system, and formatted display
+    of Shorebird Monitoring Records.
+
+        This module provides:
+        - Interactive console menu
+        - User input validation
+        - Formatted table display
+        - Delegation of data operations to the Business Layer
+
+Architecture:
+    Follows N-Layered architecture:
+        Presentation → Business → Persistence → Model
 
 Version: Python 3.14.2, pip 26.0.1, pytest 9.0.2
-Date: 2026.02.20
+Due Date: 2026.02.22
 
 GitHub Repo: 
 https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject02
@@ -34,7 +48,13 @@ from myapp.model.shorebird_monitoring_record import ShorebirdMonitoringRecord
 # Import the RecordStorage entity class from the package
 from myapp.business.record_memory_storage import RecordStorage
 
-# Constant defining the width of separator lines used in output formatting
+"""
+Constant:
+    sep_line_width (int)
+
+Purpose:
+    Defines the width of separator lines used in formatted output.
+"""
 sep_line_width = 95
 
 def main():
@@ -321,7 +341,17 @@ def main():
             continue
       
 def table_header_display():
-      # Display Title and table header
+      """
+      Displays formatted table header.
+
+      Prints:
+         - Title
+         - Column headers
+         - Separator lines
+
+      Returns:
+         None
+      """
       print("\n" +"=" * sep_line_width)
       print("Shorebird Monitoring Records")
       print("-" * sep_line_width)
@@ -333,7 +363,15 @@ def table_header_display():
 
 
 def table_footer_display(totaldisplay):
-      # Display summary information
+      """
+      Displays summary footer information.
+
+      Parameters:
+         totaldisplay (int): Number of records displayed.
+
+      Returns:
+         None
+      """
       print("-" * sep_line_width, end="\n")
       print(f"Total records displayed: {totaldisplay}")
       print("=" * sep_line_width, end="\n")

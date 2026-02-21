@@ -1,17 +1,32 @@
 """
+Module: test_main.py
+
 Docstring for test_main.py of Practical Project 2
 
-Course: CST8002 Section 010
+Course: CST8002 Section 010 Programming Language Research Project
 Professor: Stanley Pieda
 
 Author: Annabel Cheng
 Student ID: 041146557
 
-Description: This program contains unit tests that validates one scenarios of the main program's behavior: 
-            one test case is designed to ensure that the program adds a new record into the sequential data structure.
+Description:
+    Unit tests for the Business Layer (RecordStorage).
+
+    This test verifies that adding a new record correctly
+    increases the number of records stored in memory.
+
+Testing Framework:
+    Designed to be executed using pytest.
+
+Architecture Context:
+    This test interacts only with:
+        - Entity Layer (ShorebirdMonitoringRecord)
+        - Business Layer (RecordStorage)
+
+    The Persistence Layer is not involved in this unit test.
 
 Version: Python 3.14.2, pip 26.0.1, pytest 9.0.2
-Date: 2026.02.21
+Due Date: 2026.02.22
 
 GitHub Repo: 
 https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject2
@@ -29,7 +44,15 @@ Reference:
 import sys
 import os
 
-# Allow test to access project modules
+"""
+Purpose:
+    Modify the Python path so that test files can access
+    project modules located in the parent directory.
+
+Reason:
+    When running pytest from the test folder, Python
+    may not automatically detect project packages.
+"""
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
@@ -40,15 +63,28 @@ from myapp.business.record_memory_storage import RecordStorage
 
 def test_add_record():
     """
-    Unit test: Verify that adding a new record
-    increases the size of the in-memory list.
+    Test Case:
+        Verify that adding a new record increases
+        the size of the in-memory record list.
+
+    Steps:
+        1. Create a RecordStorage instance.
+        2. Record the initial number of stored records.
+        3. Create a new ShorebirdMonitoringRecord object.
+        4. Add the record to storage.
+        5. Verify that the list size increases by one.
+
+    Expected Result:
+        The number of records after addition equals
+        initial_count + 1.
     """
+    # Create storage instance (empty in-memory list)
     storage = RecordStorage()
 
-    # Initial count
+    # Get initial record count
     initial_count = len(storage.get_records())
 
-    # Create new record
+    # Create a new record object
     new_rec = ShorebirdMonitoringRecord(
         "TestSite",
         "2",
@@ -57,10 +93,11 @@ def test_add_record():
         "WILD",
         "8"
     )
-
+    
+    # Add record to storage
     storage.add_record(new_rec)
 
-    # New count
+    # Get updated record count
     new_count = len(storage.get_records())
 
     # Assert list size increased by 1
