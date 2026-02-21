@@ -76,6 +76,19 @@ def main():
    # Start the main program loop (allows repeated viewing until user exits)
    while True: 
 
+      # Display menu options
+      print("----------- Practical Project 2 Menu -----------")
+      print("1. Reload data")
+      print("2. Save data to a new csv file (UUID filename)")
+      print("3. Display records")
+      print("4. Create new record")
+      print("5. Edit record")
+      print("6. Delete record")
+      print("7. Exit")
+      print("------------------------------------------------\n")
+      # Ask user for menu choice
+      choice = input("Enter your choice (1-7): ").strip()
+
       # Display Title and table header
       print("\n" +"=" * sep_line_width)
       print("Shorebird Monitoring Records")
