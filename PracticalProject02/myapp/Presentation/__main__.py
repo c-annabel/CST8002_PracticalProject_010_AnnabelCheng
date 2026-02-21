@@ -170,16 +170,19 @@ def main():
                      table_header_display()
                      record_range = storage.get_records_range(record_range_start, record_range_end)
                      record_shown = len(record_range)
+
                      for index, r in enumerate(record_range, start = record_range_start):
                         print(f"{index:<6} | {r.display_record()}")
+                        if index%10 == 0: 
+                           print ("=" * sep_line_width) #Divider
+                           print ("** Program by Annabel Cheng **")    #show author's name as seen in ACSIS
+                           print ("=" * sep_line_width, end="\n") #Divider
                      table_footer_display(record_shown)
                      print(f"{user_name}, Display completed.")
                      break
 
                   except ValueError:
                      print("Invalid input. Please enter numbers only.") 
-
-               
                break
       # Option 4 : Add a record
       elif choice == "4":
