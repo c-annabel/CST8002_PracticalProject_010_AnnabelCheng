@@ -85,3 +85,56 @@ class RecordStorage:
    def add_record(self, record):
       """Adds a new record to in-memory list."""
       self._records.append(record)
+
+
+   # This method updates selected field of an existing record in memory 
+   # using setter methods while validating the record index.
+   def edit_record_by_index(self, index,
+                         site_identification=None,
+                         area=None,
+                         visit_date=None,
+                         start_time=None,
+                         species_code=None,
+                         count=None):
+      """
+      Updates a record in memory by its index.
+
+      Parameters:
+         index (int): Position of the record in the list.
+         site_identification (str, optional)
+         area (str, optional)
+         visit_date (str, optional)
+         start_time (str, optional)
+         species_code (str, optional)
+         count (str, optional)
+
+      Returns:
+         bool: True if updated successfully, False if index invalid.
+    
+      """
+      # Validate index
+      if not (0 <= index < len(self._records)):
+         return False
+
+      record = self._records[index]
+
+      # Update only fields that are not None
+      if site_identification is not None:
+         record.set_site_identification(site_identification)
+
+      if area is not None:
+         record.set_area(area)
+
+      if visit_date is not None:
+         record.set_visit_date(visit_date)
+
+      if start_time is not None:
+         record.set_start_time(start_time)
+
+      if species_code is not None:
+         record.set_species_code(species_code)
+
+      if count is not None:
+         record.set_count(count)
+
+      return True

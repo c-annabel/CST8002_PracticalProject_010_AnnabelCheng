@@ -195,6 +195,67 @@ def main():
             print("Added a new record.")
             print("-" * sep_line_width, end="\n")   
 
+      # Option 5 : Edit a record
+      elif choice == "5":
+            
+            while True:
+               try: 
+                  record_index = int(input(f"Choose a record index (0-{last_index}): ").strip())
+                  print("-" * sep_line_width, end="\n")  
+
+                  if 0 <= record_index <= last_index:
+                     print(f"You selected record to edit {record_index}.")
+                     print("-" * sep_line_width, end="\n")   
+
+                     table_header_display()
+                     r = storage.get_record_by_index(record_index)
+                     print(f"{record_index:<6} | {r.display_record()}")
+                     print("-" * sep_line_width, end="\n")  
+
+                     # Display questions for editing the requested record
+                     site = input(f"Enter Site Identification [{r.get_site_identification()}]: ").strip()
+                     if site == "": site = r.get_site_identification()
+                     area = input(f"Enter Area [{r.get_area()}]: ").strip()
+                     if area == "": area = r.get_area()
+                     date = input(f"Enter Visit Date (DD/MM/YYYY) [{r.get_visit_date()}]: ").strip()
+                     if date == "": date = r.get_visit_date()
+                     time = input(f"Enter Sart Time (HH:MM:SS AM/PM) [{r.get_start_time()}]: ").strip()
+                     if time == "": time = r.get_start_time()
+                     code = input(f"Enter Species Code [{r.get_species_code()}]: ").strip()
+                     if code == "": code = r.get_species_code()
+                     count = input(f"Enter Count [{r.get_count()}]: ").strip()
+                     if count == "": count = r.get_count()
+
+                     # Varifying the values
+                     # print(f"{site} | {area}| {date}| {time}| {code}| {count}")
+
+                     success = storage.edit_record_by_index(
+                        record_index,
+                        site_identification=site,
+                        area=area,
+                        visit_date=date,
+                        start_time=time,
+                        species_code=code,
+                        count=count
+                     )
+
+                     if success:
+                        print(f"Record with index {record_index} updated successfully.")
+                     else:
+                        print("Invalid index.")
+                     
+                     print("-" * sep_line_width, end="\n")  
+
+                     break
+                  else:
+                     print(f"Index must be between 0 and {last_index}.")
+                     print("-" * sep_line_width, end="\n")  
+
+               except ValueError:
+                  print("Invalid input. Please enter a number.")
+  
+
+
       # Option 7: Exit the program
       elif choice == "7":
             # Exit the program
