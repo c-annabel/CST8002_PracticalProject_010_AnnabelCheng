@@ -58,3 +58,7 @@ class RecordStorage:
    def get_total_loaded(self):
       """Returns number of loaded records."""
       return self._total_loaded
+   
+   def save_to_new_file(self):
+      repo = FileHandler()
+      return repo.write_file(self._records)

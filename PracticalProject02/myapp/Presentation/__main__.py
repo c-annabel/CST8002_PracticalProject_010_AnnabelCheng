@@ -92,11 +92,19 @@ def main():
 
       print("-" * sep_line_width, end="\n")
 
+      # Option 1 : Reload data
       if choice == "1":
          storage.load_from_data(filename, limit)
          print(f"Reloaded {limit} records.")
          print("-" * sep_line_width, end="\n")   
 
+      # Option 2 : Save to a new file with UUID file name
+      elif choice == "2":
+            new_file = storage.save_to_new_file()
+            print(f"Saved to {new_file}.")
+            print("-" * sep_line_width, end="\n")   
+               
+      # Option 7: Exit the program
       elif choice == "7":
             # Exit the program
             print(f"\nGoodbye, {user_name}!\n")

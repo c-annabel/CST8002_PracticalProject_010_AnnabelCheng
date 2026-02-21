@@ -22,22 +22,27 @@ Reference:
 
 [1] Parks Canada. (Oct. 1, 2017). Migratory Shorebird Habitat Use - Pacific Rim. 
     open.canada.ca. [Online]. Available at: https://open.canada.ca/data/en/dataset/e0aa39b6-67c0-4863-bdad-d74e73870697 
-    [Accessed: Feb. 18, 2026].
+    [Accessed: Jan. 24, 2026].
 [2] W3Schools. (n.d.). Python File Open. W3.CSS. [Online]. 
     Available at: https://www.w3schools.com/python/python_file_handling.asp.
-    [Accessed: Jan. 24, 2026]
-[3] Python Software Foundation. (n.d.). Built-in Functions. Python Software Foundation. [Online]. 
+    [Accessed: Jan. 24, 2026].
+[4] Python Software Foundation. (n.d.). Built-in Functions. Python Software Foundation. [Online]. 
     Available at: https://docs.python.org/3/library/functions.html#enumerate.
-    [Accessed: Jan. 31, 2026]
-[4] Python Software Foundation. (n.d.). csv — CSV File Reading and Writing. Python Software Foundation. [Online]. 
+    [Accessed: Jan. 31, 2026].
+[5] Python Software Foundation. (n.d.). csv — CSV File Reading and Writing. Python Software Foundation. [Online]. 
     Available at: https://docs.python.org/3/library/csv.html.
-    [Accessed: Jan. 31, 2026]
-
+    [Accessed: Jan. 31, 2026].
+[3] W3Schools. (n.d.). Python uuid Module. W3.CSS. [Online]. 
+    Available at: https://www.w3schools.com/python/ref_module_uuid.asp.
+    [Accessed: Feb. 21, 2026].
 
 """
 
 import csv #a built-in Python Library, designed to read CSV files row by row
            #it splits each row into columns
+
+import uuid #
+
 from myapp.model.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
 class FileHandler: 
@@ -119,3 +124,43 @@ class FileHandler:
 
         # Return the list of records and the total display count
         return records, totaldisplay
+    
+
+    
+    def write_file(self, records):
+        """
+        Writes records to a new CSV file using a UUID filename.
+        Returns the created filename.
+        """
+        new_filename = f"shorebird_memory_{uuid.uuid4()}.csv"
+
+        try:
+            with open(new_filename, mode="w", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
+
+                # Header row (English)
+                writer.writerow([
+                    ShorebirdMonitoringRecord.COL_SITE_IDENTIFICATION,
+                    ShorebirdMonitoringRecord.COL_AREA,
+                    ShorebirdMonitoringRecord.COL_VISIT_DATE,
+                    ShorebirdMonitoringRecord.COL_START_TIME,
+                    ShorebirdMonitoringRecord.COL_SPECIES_CODE,
+                    ShorebirdMonitoringRecord.COL_COUNT
+                ])
+
+                # Data rows
+                for r in records:
+                    writer.writerow([
+                        r.get_site_identification(),
+                        r.get_area(),
+                        r.get_visit_date(),
+                        r.get_start_time(),
+                        r.get_species_code(),
+                        r.get_count()
+                    ])
+
+        except Exception as e:
+            print("Writing file error:", e)
+            return None
+
+        return new_filename
