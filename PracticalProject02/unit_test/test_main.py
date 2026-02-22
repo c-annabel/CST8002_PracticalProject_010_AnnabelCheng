@@ -103,5 +103,6 @@ def test_add_record():
     # Get updated record count
     new_count = len(storage.get_records())
 
+    print("Author: Annabel Cheng")
     # Assert list size increased by 1
     assert new_count == initial_count + 1
