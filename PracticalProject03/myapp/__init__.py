@@ -36,7 +36,8 @@ Reference:
 """
 
 from flask import Flask
+import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=os.path.join(os.path.dirname(__file__), 'presentation', 'templates'))
 
 from myapp.presentation import routes

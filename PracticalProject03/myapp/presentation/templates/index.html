@@ -38,7 +38,16 @@ Reference:
 {% extends "base.html" %}
 {% block content %}
     <h2>All Records</h2>
-    <table border="1">
+    <table border="1" style="border-collapse: collapse; width: 90%; text-align: center;">
+        <colgroup>
+            <col style="width: 8%;">    <!-- Index -->
+            <col style="width: 5%;">    <!-- Site -->
+            <col style="width: 5%;">    <!-- Area -->
+            <col style="width: 120px;">   <!-- Visit Date -->
+            <col style="width: 120px;">   <!-- Start Time -->
+            <col style="width: 200px;">   <!-- Species Code -->
+            <col style="width: 60px;">    <!-- Count -->
+        </colgroup>
         <tr>
             <th>Index</th>
             <th>Site</th>
@@ -48,7 +57,7 @@ Reference:
             <th>Species Code</th>
             <th>Count</th>
         </tr>
-        {% for i, record in records|enumerate %}
+        {% for record in records %}
         <tr>
             <td>{{ loop.index0 }}</td>
             <td>{{ record.get_site_identification() }}</td>
