@@ -34,10 +34,15 @@ Reference:
     [Accessed: Mar. 20, 2026].
 
 """
-
+from flask import render_template
 from myapp import app
 from myapp.business.record_memory_storage import RecordStorage
 
 storage = RecordStorage()
 filename = "pacific_rim_npr_coastalmarine_migratory_shorebird_habitat_use_2011-2017_data.csv"
 storage.load_from_data(filename, 100)
+
+@app.route('/')
+def index():
+    records = storage.get_records()
+    return render_template('index.html', records=records)
