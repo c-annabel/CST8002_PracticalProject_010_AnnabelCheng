@@ -34,7 +34,7 @@ Reference:
     [Accessed: Mar. 20, 2026].
 
 """
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from myapp import app
 from myapp.business.record_memory_storage import RecordStorage
 from myapp.model.shorebird_monitoring_record import ShorebirdMonitoringRecord
@@ -71,6 +71,7 @@ def create():
             request.form['count']
         )
         storage.add_record(new_record)
+        flash("Record created successfully.", "success")
         return redirect(url_for('index'))
     return render_template('create.html')
 
@@ -104,6 +105,7 @@ def edit(index):
             species_code=request.form['code'],
             count=request.form['count']
         )
+        flash("Record updated successfully.", "success")
         return redirect(url_for('index'))
     return render_template('edit.html', record=record, index=index)
 
@@ -128,5 +130,6 @@ def delete(index):
 
     if request.method == 'POST':
         storage.delete_record_by_index(index)
+        flash("Record deleted successfully.", "danger")
         return redirect(url_for('index'))
     return render_template('delete.html', record=record, index=index)

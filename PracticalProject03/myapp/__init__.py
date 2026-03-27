@@ -40,4 +40,7 @@ import os
 
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(__file__), 'presentation', 'templates'))
 
+# ! secret key to use flash messages
+app.secret_key = "shorebird_cst8002"
+
 from myapp.presentation import routes

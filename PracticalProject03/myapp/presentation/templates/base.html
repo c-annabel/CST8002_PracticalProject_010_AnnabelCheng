@@ -40,14 +40,41 @@ Reference:
 <html>
 <head>
     <title>Shorebird Monitoring</title>
+     <style>
+        .flash {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            width: fit-content;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .danger  { background-color: #f8d7da; color: #721c24; }
+    </style>
 </head>
 <body>
     <h1>Shorebird Monitoring Records</h1>
     <h2>Practical Project 3 -  CST8002</h2>
     <h3><p><strong>Annabel Cheng</strong></p></h3>
-
     <hr>
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}" id="flash-msg">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     {% block content %}{% endblock %}
+    
+    <!-- Auto-hide flash message after 3 seconds -->
+    <script>
+        setTimeout(function() {
+            var msg = document.getElementById('flash-msg');
+            if (msg) msg.style.display = 'none';
+        }, 3000);
+    </script>
 </body>
 <hr>
 <footer>
