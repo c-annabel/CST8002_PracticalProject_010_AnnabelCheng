@@ -169,3 +169,20 @@ def reload():
     storage.load_from_data(filename, limit)
     flash(f"Dataset reloaded successfully. {storage.get_total_loaded()} records loaded.", "success")
     return redirect(url_for('index'))
+
+@app.route('/save')
+def save():
+    """
+    Route handler for saving current in-memory records
+    to a new CSV file with a UUID-generated filename.
+
+    Delegates file writing to the Business Layer and
+    redirects to the home page with a confirmation message
+    showing the new filename.
+
+    Returns:
+        Redirect to index page.
+    """
+    new_file = storage.save_to_new_file()
+    flash(f"Data saved successfully to: {new_file}", "success")
+    return redirect(url_for('index'))
