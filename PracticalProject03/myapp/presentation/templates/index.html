@@ -46,13 +46,13 @@ Reference:
 
     <table border="1" style="border-collapse: collapse; width: 90%; text-align: center;">
         <colgroup>
-            <col style="width: 8%;">    <!-- Index -->
+            <col style="width: 10%;">    <!-- Index -->
             <col style="width: 5%;">    <!-- Site -->
             <col style="width: 5%;">    <!-- Area -->
-            <col style="width: 120px;">   <!-- Visit Date -->
-            <col style="width: 120px;">   <!-- Start Time -->
-            <col style="width: 200px;">   <!-- Species Code -->
-            <col style="width: 60px;">    <!-- Count -->
+            <col style="width: 15%;">   <!-- Visit Date -->
+            <col style="width: 15%;">   <!-- Start Time -->
+            <col style="width: 20%;">   <!-- Species Code -->
+            <col style="width: 10%;">    <!-- Count -->
         </colgroup>
         <tr>
             <th>Index</th>
@@ -72,6 +72,12 @@ Reference:
             <td>{{ record.get_start_time() }}</td>
             <td>{{ record.get_species_code() }}</td>
             <td>{{ record.get_count() }}</td>
+            <td>
+                <a href="{{ url_for('edit', index=loop.index0) }}">
+                    <button>Edit</button>
+                </a>
+            </td>
+
         </tr>
         {% endfor %}
     </table>

@@ -73,3 +73,36 @@ def create():
         storage.add_record(new_record)
         return redirect(url_for('index'))
     return render_template('create.html')
+
+@app.route('/edit/<int:index>', methods=['GET', 'POST'])
+def edit(index):
+    """
+    Route handler for editing an existing record by index.
+
+    GET:  Displays the edit form pre-filled with current record values.
+    POST: Reads form input, updates the record in storage,
+          and redirects to home page.
+
+    Parameters:
+        index (int): Position of the record in the storage list.
+
+    Returns:
+        GET:  Rendered edit.html template with current record values.
+        POST: Redirect to index page.
+    """
+    record = storage.get_record_by_index(index)
+    if record is None:
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        storage.edit_record_by_index(
+            index,
+            site_identification=request.form['site'],
+            area=request.form['area'],
+            visit_date=request.form['date'],
+            start_time=request.form['time'],
+            species_code=request.form['code'],
+            count=request.form['count']
+        )
+        return redirect(url_for('index'))
+    return render_template('edit.html', record=record, index=index)
