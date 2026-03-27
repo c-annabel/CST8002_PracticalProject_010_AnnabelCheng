@@ -34,9 +34,10 @@ Reference:
     [Accessed: Mar. 20, 2026].
 
 """
-from flask import render_template
+from flask import render_template, request, redirect, url_for
 from myapp import app
 from myapp.business.record_memory_storage import RecordStorage
+from myapp.model.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
 storage = RecordStorage()
 filename = "pacific_rim_npr_coastalmarine_migratory_shorebird_habitat_use_2011-2017_data.csv"
@@ -46,3 +47,29 @@ storage.load_from_data(filename, 100)
 def index():
     records = storage.get_records()
     return render_template('index.html', records=records)
+
+@app.route('/create', methods=['GET', 'POST'])
+def create():
+    """
+    Route handler for creating a new record.
+
+    GET:  Displays the create form.
+    POST: Reads form input, creates a new ShorebirdMonitoringRecord
+          object, adds it to storage, and redirects to home page.
+
+    Returns:
+        GET:  Rendered create.html template.
+        POST: Redirect to index page.
+    """
+    if request.method == 'POST':
+        new_record = ShorebirdMonitoringRecord(
+            request.form['site'],
+            request.form['area'],
+            request.form['date'],
+            request.form['time'],
+            request.form['code'],
+            request.form['count']
+        )
+        storage.add_record(new_record)
+        return redirect(url_for('index'))
+    return render_template('create.html')

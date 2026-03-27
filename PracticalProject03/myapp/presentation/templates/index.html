@@ -38,6 +38,12 @@ Reference:
 {% extends "base.html" %}
 {% block content %}
     <h2>All Records</h2>
+    <!-- Create Button -->
+    <a href="{{ url_for('create') }}">
+        <button>+ Create New Record</button>
+    </a>
+    <br><br>
+
     <table border="1" style="border-collapse: collapse; width: 90%; text-align: center;">
         <colgroup>
             <col style="width: 8%;">    <!-- Index -->
