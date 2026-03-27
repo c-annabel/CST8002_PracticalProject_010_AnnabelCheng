@@ -106,3 +106,27 @@ def edit(index):
         )
         return redirect(url_for('index'))
     return render_template('edit.html', record=record, index=index)
+
+@app.route('/delete/<int:index>', methods=['GET', 'POST'])
+def delete(index):
+    """
+    Route handler for deleting a record by index.
+
+    GET:  Displays a confirmation page showing the selected record.
+    POST: Deletes the record from storage and redirects to home page.
+
+    Parameters:
+        index (int): Position of the record in the storage list.
+
+    Returns:
+        GET:  Rendered delete.html confirmation template.
+        POST: Redirect to index page.
+    """
+    record = storage.get_record_by_index(index)
+    if record is None:
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        storage.delete_record_by_index(index)
+        return redirect(url_for('index'))
+    return render_template('delete.html', record=record, index=index)
