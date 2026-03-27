@@ -41,7 +41,8 @@ from myapp.model.shorebird_monitoring_record import ShorebirdMonitoringRecord
 
 storage = RecordStorage()
 filename = "pacific_rim_npr_coastalmarine_migratory_shorebird_habitat_use_2011-2017_data.csv"
-storage.load_from_data(filename, 100)
+limit = 100
+storage.load_from_data(filename, limit)
 
 @app.route('/')
 def index():
@@ -152,3 +153,19 @@ def view(index):
     if record is None:
         return redirect(url_for('index'))
     return render_template('view_one.html', record=record, index=index)
+
+@app.route('/reload')
+def reload():
+    """
+    Route handler for reloading the dataset from the CSV file.
+
+    Replaces all current in-memory records with a fresh
+    load from the original dataset file and redirects
+    to the home page with a confirmation message.
+
+    Returns:
+        Redirect to index page.
+    """
+    storage.load_from_data(filename, limit)
+    flash(f"Dataset reloaded successfully. {storage.get_total_loaded()} records loaded.", "success")
+    return redirect(url_for('index'))
