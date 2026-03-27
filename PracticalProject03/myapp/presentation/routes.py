@@ -133,3 +133,22 @@ def delete(index):
         flash("Record deleted successfully.", "danger")
         return redirect(url_for('index'))
     return render_template('delete.html', record=record, index=index)
+
+@app.route('/view/<int:index>')
+def view(index):
+    """
+    Route handler for viewing a single record by index.
+
+    Retrieves one record from storage by index and
+    passes it to the view_one.html template for display.
+
+    Parameters:
+        index (int): Position of the record in the storage list.
+
+    Returns:
+        Rendered view_one.html template with the selected record.
+    """
+    record = storage.get_record_by_index(index)
+    if record is None:
+        return redirect(url_for('index'))
+    return render_template('view_one.html', record=record, index=index)

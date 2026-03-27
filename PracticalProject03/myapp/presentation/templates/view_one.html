@@ -1,7 +1,7 @@
 <!--
-Module: index.html
+Module: view_one.html
 
-Docstring for index.html of Practical Project 3
+Docstring for view_one.html of Practical Project 3
 
 Course: CST8002 Section 010 Programming Language Research Project
 Professor: Stanley Pieda
@@ -10,7 +10,7 @@ Author: Annabel Cheng
 Student ID: 041146557
 
 Description: 
-    This module represents web presentation with database displayed.  
+    This module represents web presentation with creating new dataset
 
 Version: 
         Python 3.14.3
@@ -35,56 +35,32 @@ Reference:
     [Accessed: Mar. 25, 2026].
 
 -->
+
 {% extends "base.html" %}
 {% block content %}
-    <h2>All Records</h2>
-    <!-- Create Button -->
-    <a href="{{ url_for('create') }}">
-        <button>+ Create New Record</button>
-    </a>
-    <br><br>
-
-    <table border="1" style="border-collapse: collapse; width: 90%; text-align: center;">
+    <h2>Record {{ index }}</h2>
+    <table border="1" style="border-collapse: collapse; width: 80%; text-align: center;">
         <colgroup>
-            <col style="width: 10%;">    <!-- Index -->
-            <col style="width: 5%;">    <!-- Site -->
-            <col style="width: 5%;">    <!-- Area -->
-            <col style="width: 15%;">   <!-- Visit Date -->
-            <col style="width: 15%;">   <!-- Start Time -->
-            <col style="width: 20%;">   <!-- Species Code -->
+            <col style="width: 10%;">    <!-- Site -->
+            <col style="width: 10%;">    <!-- Area -->
+            <col style="width: 15%;">    <!-- Visit Date -->
+            <col style="width: 15%;">    <!-- Start Time -->
+            <col style="width: 20%;">    <!-- Species Code -->
             <col style="width: 10%;">    <!-- Count -->
         </colgroup>
         <tr>
-            <th>Index</th>
-            <th>Site</th>
-            <th>Area</th>
-            <th>Visit Date</th>
-            <th>Start Time</th>
-            <th>Species Code</th>
-            <th>Count</th>
+            <th>Site</th><th>Area</th><th>Visit Date</th>
+            <th>Start Time</th><th>Species Code</th><th>Count</th>
         </tr>
-        {% for record in records %}
         <tr>
-            <td>{{ loop.index0 }}</td>
             <td>{{ record.get_site_identification() }}</td>
             <td>{{ record.get_area() }}</td>
             <td>{{ record.get_visit_date() }}</td>
             <td>{{ record.get_start_time() }}</td>
             <td>{{ record.get_species_code() }}</td>
             <td>{{ record.get_count() }}</td>
-            <td>
-                <a href="{{ url_for('view', index=loop.index0) }}">
-                    <button>View</button>
-                </a>
-                <a href="{{ url_for('edit', index=loop.index0) }}">
-                    <button>Edit</button>
-                </a>
-                <a href="{{ url_for('delete', index=loop.index0) }}">
-                    <button>Delete</button>
-                </a>
-            </td>
-
         </tr>
-        {% endfor %}
     </table>
+    <br>
+    <a href="{{ url_for('index') }}"><button>Back to All Records</button></a>
 {% endblock %}
