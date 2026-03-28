@@ -1,5 +1,5 @@
 <!--
-Module: delete.html
+Template: delete.html
 
 Docstring for delete.html of Practical Project 3
 
@@ -10,7 +10,44 @@ Author: Annabel Cheng
 Student ID: 041146557
 
 Description: 
-    This module represents web presentation with deleting the dataset
+        This template represents the View layer Delete Confirmation
+        page of the Shorebird Monitoring Records Flask MVC web application.
+
+        It extends base.html and displays the full details of the
+        selected record in a formatted table, asking the user to
+        confirm the deletion before proceeding.
+
+        On confirmation, the form is submitted via HTTP POST to the
+        delete() route in routes.py, which removes the record from
+        memory and redirects to the home page with a danger flash message.
+
+        A Cancel button is placed outside the form so clicking it
+        navigates back to the home page without triggering the deletion.
+
+    Extends:
+        base.html
+
+    Jinja2 Variables:
+        index  (int):                       Zero-based index of the record to delete.
+        record (ShorebirdMonitoringRecord):  The record object retrieved from
+                                            storage by the delete() route.
+
+    Jinja2 Variables Used:
+        index                            : Displayed in the page heading.
+        record.get_site_identification() : Site identification value.
+        record.get_area()                : Area value.
+        record.get_visit_date()          : Visit date value.
+        record.get_start_time()          : Start time value.
+        record.get_species_code()        : Species code value.
+        record.get_count()               : Count value.
+        url_for('index')                 : URL to return to the home page on Cancel.
+
+    Form Method:
+        POST → handled by delete() route in routes.py
+
+    Architecture:
+        View layer of the Flask MVC pattern.
+        Submits confirmation to: routes.py → delete() route.
 
 Version: 
         Python 3.14.3
@@ -33,6 +70,9 @@ Reference:
 [3] W3Schools (2026). FHTML tutorial. W3Schools. [Online]. 
     Available at: https://www.w3schools.com/html/default.asp
     [Accessed: Mar. 25, 2026].
+[4] Anthropic. (2026). DocString Assistance. Claude (claude-sonnet-4-6) [Large language model]. [Online].
+    Available at: https://claude.ai
+    [Accessed: Mar. 28, 2026].
 
 -->
 

@@ -10,7 +10,15 @@ Author: Annabel Cheng
 Student ID: 041146557
 
 Description: 
-    This module starts the Flask server
+    This module serves as the entry point for running the Shorebird
+    Monitoring Records Flask MVC web application.
+
+    It imports the Flask application instance from the myapp package
+    and starts the development server when executed directly.
+
+Architecture:
+    Entry point for the Flask MVC application:
+        run.py → myapp/__init__.py (app) → presentation/routes.py (Controller)
 
 Version: 
         Python 3.14.3
@@ -32,9 +40,15 @@ Reference:
 [3] GeeksforGeeks. (Mar. 7, 2026). Flask tutorial. GeeksforGeeks. [Online]. 
     Available at: https://www.geeksforgeeks.org/python/flask-tutorial/ 
     [Accessed: Mar. 20, 2026].
+[4] Anthropic. (2026). DocString Assistance. Claude (claude-sonnet-4-6) [Large language model]. [Online].
+    Available at: https://claude.ai
+    [Accessed: Mar. 27, 2026].
+
 
 """
 from myapp import app
 
 if __name__ == "__main__":
+    # debug=True enables auto-restart on code changes
+    # and displays detailed error messages in the browser during development
     app.run(debug=True)

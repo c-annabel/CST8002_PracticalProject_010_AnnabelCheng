@@ -1,5 +1,5 @@
 <!--
-Module: base.html
+Template: base.html
 
 Docstring for base.html of Practical Project 3
 
@@ -10,7 +10,25 @@ Author: Annabel Cheng
 Student ID: 041146557
 
 Description: 
-    This module represents web presentation with student name displayed.  
+        This is the base layout template for the Shorebird Monitoring
+        Records Flask MVC web application.
+
+        All other templates extend this file using Jinja2 template
+        inheritance. It defines the shared page structure including
+        the page title, student name display, flash message handling,
+        and the content block placeholder that child templates fill in.
+
+    Jinja2 Blocks:
+        {% block content %} : Replaced by each child template's content.
+
+    Flash Message Categories:
+        success : Displayed with a green background for confirmations.
+        danger  : Displayed with a red background for deletions.
+
+    Architecture:
+        View layer of the Flask MVC pattern.
+        Extended by: index.html, view_one.html, create.html,
+                     edit.html, delete.html
 
 Version: 
         Python 3.14.3
@@ -33,6 +51,9 @@ Reference:
 [3] W3Schools (2026). FHTML tutorial. W3Schools. [Online]. 
     Available at: https://www.w3schools.com/html/default.asp
     [Accessed: Mar. 25, 2026].
+[4] Anthropic. (2026). DocString Assistance. Claude (claude-sonnet-4-6) [Large language model]. [Online].
+    Available at: https://claude.ai
+    [Accessed: Mar. 27, 2026].
 
 -->
 
@@ -67,7 +88,7 @@ Reference:
     {% endwith %}
 
     {% block content %}{% endblock %}
-    
+
     <!-- Auto-hide flash message after 3 seconds -->
     <script>
         setTimeout(function() {

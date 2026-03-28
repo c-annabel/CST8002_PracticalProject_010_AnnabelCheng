@@ -1,5 +1,5 @@
 <!--
-Module: view_one.html
+Template: view_one.html
 
 Docstring for view_one.html of Practical Project 3
 
@@ -10,7 +10,38 @@ Author: Annabel Cheng
 Student ID: 041146557
 
 Description: 
-    This module represents web presentation with creating new dataset
+        This template represents the View layer View One page of the
+        Shorebird Monitoring Records Flask MVC web application.
+
+        It extends base.html and displays the full details of a
+        single shorebird monitoring record selected by the user
+        from the home page. The record is displayed in a formatted
+        single-row table.
+
+        A Back to All Records button is provided to return the
+        user to the home page.
+
+    Extends:
+        base.html
+
+    Jinja2 Variables:
+        index  (int):                    Zero-based index of the selected record.
+        record (ShorebirdMonitoringRecord): The record object retrieved from
+                                           storage by the view() route.
+
+    Jinja2 Variables Used:
+        index                            : Displayed in the page heading.
+        record.get_site_identification() : Site identification value.
+        record.get_area()                : Area value.
+        record.get_visit_date()          : Visit date value.
+        record.get_start_time()          : Start time value.
+        record.get_species_code()        : Species code value.
+        record.get_count()               : Count value.
+        url_for('index')                 : URL to return to the home page.
+
+    Architecture:
+        View layer of the Flask MVC pattern.
+        Receives data from: routes.py → view() route.
 
 Version: 
         Python 3.14.3
@@ -33,6 +64,9 @@ Reference:
 [3] W3Schools (2026). FHTML tutorial. W3Schools. [Online]. 
     Available at: https://www.w3schools.com/html/default.asp
     [Accessed: Mar. 25, 2026].
+[4] Anthropic. (2026). DocString Assistance. Claude (claude-sonnet-4-6) [Large language model]. [Online].
+    Available at: https://claude.ai
+    [Accessed: Mar. 28, 2026].
 
 -->
 

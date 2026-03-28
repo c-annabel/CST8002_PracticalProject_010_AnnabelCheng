@@ -1,5 +1,5 @@
 <!--
-Module: create.html
+Template: create.html
 
 Docstring for create.html of Practical Project 3
 
@@ -10,7 +10,38 @@ Author: Annabel Cheng
 Student ID: 041146557
 
 Description: 
-    This module represents web presentation with creating new dataset
+        This template represents the View layer Create page of the
+        Shorebird Monitoring Records Flask MVC web application.
+
+        It extends base.html and displays an empty input form
+        for the user to enter details for a new shorebird monitoring
+        record. On submission, the form data is sent via HTTP POST
+        to the create() route in routes.py, which creates a new
+        ShorebirdMonitoringRecord object and adds it to memory.
+
+        A Cancel button is provided to return to the home page
+        without creating a record.
+
+    Extends:
+        base.html
+
+    Form Fields:
+        site  : Site Identification
+        area  : Area
+        date  : Visit Date (format: DD/MM/YYYY)
+        time  : Start Time (format: HH:MM:SS AM/PM)
+        code  : Species Code
+        count : Count
+
+    Form Method:
+        POST → handled by create() route in routes.py
+
+    Jinja2 Variables Used:
+        url_for('index') : URL to return to the home page on Cancel.
+
+    Architecture:
+        View layer of the Flask MVC pattern.
+        Submits data to: routes.py → create() route.
 
 Version: 
         Python 3.14.3
@@ -33,6 +64,9 @@ Reference:
 [3] W3Schools (2026). FHTML tutorial. W3Schools. [Online]. 
     Available at: https://www.w3schools.com/html/default.asp
     [Accessed: Mar. 25, 2026].
+[4] Anthropic. (2026). DocString Assistance. Claude (claude-sonnet-4-6) [Large language model]. [Online].
+    Available at: https://claude.ai
+    [Accessed: Mar. 27, 2026].
 
 -->
 

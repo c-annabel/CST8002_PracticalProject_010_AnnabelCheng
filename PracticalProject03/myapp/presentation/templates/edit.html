@@ -1,5 +1,5 @@
 <!--
-Module: edit.html
+Template: edit.html
 
 Docstring for edit.html of Practical Project 3
 
@@ -10,7 +10,56 @@ Author: Annabel Cheng
 Student ID: 041146557
 
 Description: 
-    This module represents web presentation with editing the dataset
+        This template represents the View layer Edit page of the
+        Shorebird Monitoring Records Flask MVC web application.
+
+        It extends base.html and displays a pre-filled input form
+        containing the current values of the selected shorebird
+        monitoring record. The user can modify any field and submit
+        the form to save the changes.
+
+        On submission, the form data is sent via HTTP POST to the
+        edit() route in routes.py, which updates the record in
+        memory and redirects to the home page with a success
+        flash message.
+
+        A Cancel button is placed outside the form so clicking it
+        navigates back to the home page without saving any changes.
+
+    Extends:
+        base.html
+
+    Jinja2 Variables:
+        index  (int):                       Zero-based index of the record to edit.
+        record (ShorebirdMonitoringRecord):  The record object retrieved from
+                                            storage by the edit() route,
+                                            used to pre-fill the form fields.
+
+    Form Fields (pre-filled with current record values):
+        site  : Site Identification  → record.get_site_identification()
+        area  : Area                 → record.get_area()
+        date  : Visit Date           → record.get_visit_date()
+        time  : Start Time           → record.get_start_time()
+        code  : Species Code         → record.get_species_code()
+        count : Count                → record.get_count()
+
+    Form Method:
+        POST → handled by edit() route in routes.py
+
+    Jinja2 Variables Used:
+        index                            : Displayed in the page heading.
+        record.get_site_identification() : Pre-fills site input field.
+        record.get_area()                : Pre-fills area input field.
+        record.get_visit_date()          : Pre-fills date input field.
+        record.get_start_time()          : Pre-fills time input field.
+        record.get_species_code()        : Pre-fills code input field.
+        record.get_count()               : Pre-fills count input field.
+        url_for('index')                 : URL to return to home page on Cancel.
+
+    Architecture:
+        View layer of the Flask MVC pattern.
+        Receives data from: routes.py → edit() route (GET).
+        Submits data to:    routes.py → edit() route (POST).
 
 Version: 
         Python 3.14.3
@@ -33,6 +82,10 @@ Reference:
 [3] W3Schools (2026). FHTML tutorial. W3Schools. [Online]. 
     Available at: https://www.w3schools.com/html/default.asp
     [Accessed: Mar. 25, 2026].
+[4] Anthropic. (2026). DocString Assistance. Claude (claude-sonnet-4-6) [Large language model]. [Online].
+    Available at: https://claude.ai
+    [Accessed: Mar. 28, 2026].
+
 
 -->
 

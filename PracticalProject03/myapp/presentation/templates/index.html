@@ -1,5 +1,5 @@
 <!--
-Module: index.html
+Template: index.html
 
 Docstring for index.html of Practical Project 3
 
@@ -10,7 +10,39 @@ Author: Annabel Cheng
 Student ID: 041146557
 
 Description: 
-    This module represents web presentation with database displayed.  
+        This template represents the View layer home page of the
+        Shorebird Monitoring Records Flask MVC web application.
+
+        It extends base.html and displays all shorebird monitoring
+        records currently held in memory in a formatted table.
+        Each row provides View, Edit, and Delete action buttons
+        that link to their respective routes.
+
+        Action buttons above the table allow the user to:
+            - Create a new record
+            - Reload the dataset from the CSV file
+            - Save current records to a UUID-generated CSV file
+
+    Extends:
+        base.html
+
+    Jinja2 Variables:
+        records (list): List of ShorebirdMonitoringRecord objects
+                        passed from the index() route in routes.py.
+
+    Jinja2 Variables Used:
+        loop.index0          : Zero-based row index for each record.
+        record.get_*()       : Getter methods from ShorebirdMonitoringRecord.
+        url_for('create')    : URL to the Create route.
+        url_for('reload')    : URL to the Reload Dataset route.
+        url_for('save')      : URL to the Save to File route.
+        url_for('view')      : URL to the View One route.
+        url_for('edit')      : URL to the Edit route.
+        url_for('delete')    : URL to the Delete route.
+
+    Architecture:
+        View layer of the Flask MVC pattern.
+        Receives data from: routes.py → index() route.
 
 Version: 
         Python 3.14.3
@@ -33,6 +65,9 @@ Reference:
 [3] W3Schools (2026). FHTML tutorial. W3Schools. [Online]. 
     Available at: https://www.w3schools.com/html/default.asp
     [Accessed: Mar. 25, 2026].
+[4] Anthropic. (2026). DocString Assistance. Claude (claude-sonnet-4-6) [Large language model]. [Online].
+    Available at: https://claude.ai
+    [Accessed: Mar. 27, 2026].
 
 -->
 {% extends "base.html" %}
