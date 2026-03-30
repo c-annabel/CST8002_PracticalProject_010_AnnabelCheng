@@ -1,0 +1,100 @@
+<!--
+Template: view_one.html
+
+Docstring for view_one.html of Practical Project 3
+
+Course: CST8002 Section 010 Programming Language Research Project
+Professor: Stanley Pieda
+
+Author: Annabel Cheng
+Student ID: 041146557
+
+Description: 
+        This template represents the View layer View One page of the
+        Shorebird Monitoring Records Flask MVC web application.
+
+        It extends base.html and displays the full details of a
+        single shorebird monitoring record selected by the user
+        from the home page. The record is displayed in a formatted
+        single-row table.
+
+        A Back to All Records button is provided to return the
+        user to the home page.
+
+    Extends:
+        base.html
+
+    Jinja2 Variables:
+        index  (int):                    Zero-based index of the selected record.
+        record (ShorebirdMonitoringRecord): The record object retrieved from
+                                           storage by the view() route.
+
+    Jinja2 Variables Used:
+        index                            : Displayed in the page heading.
+        record.get_site_identification() : Site identification value.
+        record.get_area()                : Area value.
+        record.get_visit_date()          : Visit date value.
+        record.get_start_time()          : Start time value.
+        record.get_species_code()        : Species code value.
+        record.get_count()               : Count value.
+        url_for('index')                 : URL to return to the home page.
+
+    Architecture:
+        View layer of the Flask MVC pattern.
+        Receives data from: routes.py → view() route.
+
+Version: 
+        Python 3.14.3
+        pip 26.0.1
+        Flask 3.1.3
+        Werkzeug 3.1.7
+
+Due Date: 2026.03.29
+
+GitHub Repo: 
+https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject03
+
+Reference: 
+[1] Parks Canada. (Oct. 1, 2017). Migratory Shorebird Habitat Use - Pacific Rim. open.canada.ca. [Online]. 
+    Available at: https://open.canada.ca/data/en/dataset/e0aa39b6-67c0-4863-bdad-d74e73870697 
+    [Accessed: Feb. 18, 2026].
+[2] Pallets. (2010). Welcome to Flask — Flask documentation (3.1.x). Flask Official Documentation. Pallets. [Online].
+    Available at: https://flask.palletsprojects.com/en/stable/ 
+    [Accessed: Mar. 20, 2026].
+[3] W3Schools (2026). HTML tutorial. W3Schools. [Online]. 
+    Available at: https://www.w3schools.com/html/default.asp
+    [Accessed: Mar. 25, 2026].
+[4] Anthropic. (2026). DocString Assistance. Claude (claude-sonnet-4-6) [Large language model]. [Online].
+    Available at: https://claude.ai
+    [Accessed: Mar. 28, 2026].
+
+-->
+
+{% extends "base.html" %}
+{% block content %}
+    <h2>Record {{ index }}</h2>
+    <table border="1" style="border-collapse: collapse; width: 80%; text-align: center;">
+        <colgroup>
+            <col style="width: 10%;">    <!-- Site -->
+            <col style="width: 10%;">    <!-- Area -->
+            <col style="width: 15%;">    <!-- Visit Date -->
+            <col style="width: 15%;">    <!-- Start Time -->
+            <col style="width: 20%;">    <!-- Species Code -->
+            <col style="width: 10%;">    <!-- Count -->
+        </colgroup>
+        <tr>
+            <th>Site</th><th>Area</th><th>Visit Date</th>
+            <th>Start Time</th><th>Species Code</th><th>Count</th>
+        </tr>
+        <tr>
+            <td>{{ record.get_site_identification() }}</td>
+            <td>{{ record.get_area() }}</td>
+            <td>{{ record.get_visit_date() }}</td>
+            <td>{{ record.get_start_time() }}</td>
+            <td>{{ record.get_species_code() }}</td>
+            <td>{{ record.get_count() }}</td>
+        </tr>
+    </table>
+    <br>
+    <a href="{{ url_for('index') }}"><button>Back to All Records</button></a>
+{% endblock %}
