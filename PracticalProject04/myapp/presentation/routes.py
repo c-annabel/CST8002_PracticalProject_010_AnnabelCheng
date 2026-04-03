@@ -359,3 +359,16 @@ def search():
         species_query, selected_sites, selected_areas, selected_dates
     )
 
+    # Dropdown options derived from filtered results only (cascading)
+    return render_template(
+        'index.html',
+        records=results,
+        unique_sites=storage.get_unique_values('get_site_identification', results),
+        unique_areas=storage.get_unique_values('get_area', results),
+        unique_dates=storage.get_unique_dates_sorted(results),
+        species_query=species_query,
+        selected_sites=selected_sites,
+        selected_areas=selected_areas,
+        selected_dates=selected_dates,
+        total=len(results)
+    )
