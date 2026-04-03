@@ -2,6 +2,7 @@
 Module: __routes__.py
 
 Docstring for __routes__.py of Practical Project 3
+Modified for Practical Project 4
 
 Course: CST8002 Section 010 Programming Language Research Project
 Professor: Stanley Pieda
@@ -38,10 +39,11 @@ Version:
         pip 26.0.1
         Flask 3.1.3
         Werkzeug 3.1.7
-Due Date: 2026.03.29
+
+Due Date: 2026.04.12
 
 GitHub Repo: 
-https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject03
+https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject04
 
 Reference: 
 [1] Parks Canada. (Oct. 1, 2017). Migratory Shorebird Habitat Use - Pacific Rim. open.canada.ca. [Online]. 
@@ -59,6 +61,17 @@ Reference:
 [5] Anthropic. (2026). DocString Assistance. Claude (claude-sonnet-4-6) [Large language model]. [Online].
     Available at: https://claude.ai
     [Accessed: Mar. 27, 2026].
+# Practical Project 4
+[6] Wong A. (Aug. 2, 2020). How to build a simple search engine using Flask. Medium. [Online]. 
+    Available at: https://medium.com/analytics-vidhya/how-to-build-a-simple-search-engine-using-flask-4f3c01fe80fa 
+    [Accessed: Apr. 1, 2026].
+[7] Sofwan A. (Oct. 24, 2022). Creating Data Filter using Flask. Medium. [Online]. 
+    Available at: https://medium.com/nerd-for-tech/creating-data-filter-using-flask-3f96c393b8df 
+    [Accessed: Apr. 1, 2026].
+[8] Pallets. (2010). Welcome to Flask — Flask documentation (3.1.x). Flask Official Documentation. Pallets. [Online]. 
+    Available at: https://flask.palletsprojects.com/en/stable/ 
+    [Accessed: Apr. 1, 2026].
+
 
 """
 from flask import render_template, request, redirect, url_for, flash
@@ -114,8 +127,18 @@ def index():
         Response: Rendered index.html template with all records.
     """
     records = storage.get_records()
-    return render_template('index.html', records=records)
- 
+    return render_template(
+        'index.html', records=records,
+        # Search/Filter features for Practical Project 4
+        unique_sites=storage.get_unique_values('get_site_identification'),
+        unique_areas=storage.get_unique_values('get_area'),
+        unique_dates=storage.get_unique_dates_sorted(),
+        species_query="",
+        selected_sites=[],
+        selected_areas=[],
+        selected_dates=[],
+        total=len(records)                        
+        )
  
 # ==============================
 # Route: View One Record
