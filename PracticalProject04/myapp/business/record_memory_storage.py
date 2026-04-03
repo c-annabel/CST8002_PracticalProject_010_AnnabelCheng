@@ -2,6 +2,7 @@
 Module: record_memory_storage.py
 
 Docstring for record_memory_storage.py of Practical Project 2
+Modified for Practical Project 4
 
 Course: CST8002 Section 010 Programming Language Research Project
 Professor: Stanley Pieda
@@ -15,11 +16,17 @@ Description:
     record objects and provides controlled access operations
     between the Presentation Layer and Persistence Layer.
 
-Version: Python 3.14.2, pip 26.0.1, pytest 9.0.2
-Due Date: 2026.02.22
+    Project 4: 
+    - Add get_unique_values() for returns a sorted list of unique valuesand 
+    - Add get_unique_dates_sorted() returns visit dates sorted chronologically
+    - Add filter_records() that filters in-memory records by species code text and 
+    selected site, area, and visit date values.
+
+Version: Python 3.14.3, pip 26.0.1, Flask 3.1.3
+Due Date: 2026.04.12
 
 GitHub Repo: 
-https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject02
+https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject04
 
 Reference: 
 
@@ -29,6 +36,17 @@ Reference:
 [2] Parks Canada. (Oct. 1, 2017). Migratory Shorebird Habitat Use - Pacific Rim. open.canada.ca. [Online]. 
     Available at: https://open.canada.ca/data/en/dataset/e0aa39b6-67c0-4863-bdad-d74e73870697 
     [Accessed: Feb. 18, 2026].
+[3] Wong A. (Aug. 2, 2020). How to build a simple search engine using Flask. Medium. [Online]. 
+    Available at: https://medium.com/analytics-vidhya/how-to-build-a-simple-search-engine-using-flask-4f3c01fe80fa 
+    [Accessed: Apr. 1, 2026].
+[4] Sofwan A. (Oct. 24, 2022). Creating Data Filter using Flask. Medium. [Online]. 
+    Available at: https://medium.com/nerd-for-tech/creating-data-filter-using-flask-3f96c393b8df 
+    [Accessed: Apr. 1, 2026].
+[5] Pallets. (2010). Welcome to Flask — Flask documentation (3.1.x). Flask Official Documentation. Pallets. [Online]. 
+    Available at: https://flask.palletsprojects.com/en/stable/ 
+    [Accessed: Apr. 1, 2026].
+
+
 
 """
 # Import the FileHandler class to perform file input/output operations
@@ -236,3 +254,109 @@ class RecordStorage:
             del self._records[index]
             return True
         return False
+    
+    # Adding Search/Filter features for PP4 ----------------------------
+    def get_unique_values(self, getter_name, records=None):
+        """
+        Returns a sorted list of unique values for a given field.
+        If records is provided, unique values are derived from that
+        list only — used to cascade dropdown options after filtering.
+
+        Parameters:
+            getter_name (str):       Name of the getter method to call.
+            records     (list|None): Optional subset of records to scan.
+                                     Defaults to all in-memory records.
+
+        Returns:
+            list[str]: Sorted list of unique non-empty values.
+        """
+        if records is None:
+           records = self._records
+        
+        values = set()
+        for record in records:
+            val = getattr(record, getter_name)()
+            if val:
+                values.add(val.strip())
+        return sorted(values)
+
+    def get_unique_dates_sorted(self, records=None):
+        """
+        Returns visit dates sorted chronologically (earliest first).
+        Tries multiple date formats before falling back to string sort.
+        If records is provided, derives dates from that subset only.
+
+        Parameters:
+            records (list|None): Optional subset of records to scan.
+                                 Defaults to all in-memory records.
+
+        Returns:
+            list[str]: Chronologically sorted list of unique date strings.
+        """
+        from datetime import datetime
+
+        if records is None:
+           records = self._records
+
+        values = set()
+        for record in records:
+            val = record.get_visit_date()
+            if val:
+                values.add(val.strip())
+
+        def parse_date(d):
+            for fmt in ('%Y-%m-%d', '%m/%d/%Y', '%d/%m/%Y',
+                        '%Y/%m/%d', '%d-%b-%Y', '%b-%d-%Y'):
+                try:
+                    return datetime.strptime(d, fmt)
+                except ValueError:
+                    continue
+            return d  # fallback: string sort
+
+        return sorted(values, key=parse_date)
+
+
+    def filter_records(self, species_query, sites, areas, dates):
+        """
+        Filters in-memory records by species code text and selected
+        site, area, and visit date values. All active filters are
+        applied together (AND logic).
+
+        Parameters:
+            species_query (str):  Partial text to match against species code.
+            sites         (list): Selected site identification values.
+            areas         (list): Selected area values.
+            dates         (list): Selected visit date values.
+
+        Returns:
+            list: Filtered list of ShorebirdMonitoringRecord objects.
+
+        """
+        results = self._records
+
+        if species_query:
+            q = species_query.lower()
+            results = [
+                r for r in results
+                if q in r.get_species_code().lower()
+            ]
+
+        if sites:
+            results = [
+                r for r in results
+                if r.get_site_identification() in sites
+            ]
+
+        if areas:
+            results = [
+                r for r in results
+                if r.get_area() in areas
+            ]
+
+        if dates:
+            results = [
+                r for r in results
+                if r.get_visit_date() in dates
+            ]
+
+        return results
