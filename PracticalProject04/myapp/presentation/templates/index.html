@@ -2,6 +2,7 @@
 Template: index.html
 
 Docstring for index.html of Practical Project 3
+2026/04/03 Modified for Practical Project 4
 
 Course: CST8002 Section 010 Programming Language Research Project
 Professor: Stanley Pieda
@@ -40,6 +41,9 @@ Description:
         url_for('edit')      : URL to the Edit route.
         url_for('delete')    : URL to the Delete route.
 
+    New Search/Filter feature for Practical Project 4:
+        Add the search form
+
     Architecture:
         View layer of the Flask MVC pattern.
         Receives data from: routes.py → index() route.
@@ -50,10 +54,10 @@ Version:
         Flask 3.1.3
         Werkzeug 3.1.7
 
-Due Date: 2026.03.29
+Due Date: 2026.04.12
 
 GitHub Repo: 
-https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject03
+https://github.com/c-annabel/CST8002_PracticalProject_010_AnnabelCheng/tree/main/PracticalProject04
 
 Reference: 
 [1] Parks Canada. (Oct. 1, 2017). Migratory Shorebird Habitat Use - Pacific Rim. open.canada.ca. [Online]. 
@@ -68,64 +72,153 @@ Reference:
 [4] Anthropic. (2026). DocString Assistance. Claude (claude-sonnet-4-6) [Large language model]. [Online].
     Available at: https://claude.ai
     [Accessed: Mar. 27, 2026].
+# Practical Project 4
+[5] Wong A. (Aug. 2, 2020). How to build a simple search engine using Flask. Medium. [Online]. 
+    Available at: https://medium.com/analytics-vidhya/how-to-build-a-simple-search-engine-using-flask-4f3c01fe80fa 
+    [Accessed: Apr. 1, 2026].
+[6] Sofwan A. (Oct. 24, 2022). Creating Data Filter using Flask. Medium. [Online]. 
+    Available at: https://medium.com/nerd-for-tech/creating-data-filter-using-flask-3f96c393b8df 
+    [Accessed: Apr. 1, 2026].
+[7] Pallets. (2010). Welcome to Flask — Flask documentation (3.1.x). Flask Official Documentation. Pallets. [Online]. 
+    Available at: https://flask.palletsprojects.com/en/stable/ 
+    [Accessed: Apr. 1, 2026].
 
 -->
 {% extends "base.html" %}
 {% block content %}
     <h2>All Records</h2>
-    <!-- Create Button -->
-    <a href="{{ url_for('create') }}">
-        <button>+ Create New Record</button>
-    </a>
-    <a href="{{ url_for('reload') }}" style="margin-left: 15px;">
-        <button>↺ Reload Dataset</button>
-    </a>
-    <a href="{{ url_for('save') }}" style="margin-left: 15px;">
-    <button>💾 Save to File</button>
-    </a>
-    <br>
-    <br>
-    <table border="1" style="border-collapse: collapse; width: 90%; text-align: center;">
-        <colgroup>
-            <col style="width: 10%;">    <!-- Index -->
-            <col style="width: 5%;">    <!-- Site -->
-            <col style="width: 5%;">    <!-- Area -->
-            <col style="width: 15%;">   <!-- Visit Date -->
-            <col style="width: 15%;">   <!-- Start Time -->
-            <col style="width: 20%;">   <!-- Species Code -->
-            <col style="width: 10%;">    <!-- Count -->
-        </colgroup>
-        <tr>
-            <th>Index</th>
-            <th>Site</th>
-            <th>Area</th>
-            <th>Visit Date</th>
-            <th>Start Time</th>
-            <th>Species Code</th>
-            <th>Count</th>
-        </tr>
-        {% for record in records %}
-        <tr>
-            <td>{{ loop.index0 }}</td>
-            <td>{{ record.get_site_identification() }}</td>
-            <td>{{ record.get_area() }}</td>
-            <td>{{ record.get_visit_date() }}</td>
-            <td>{{ record.get_start_time() }}</td>
-            <td>{{ record.get_species_code() }}</td>
-            <td>{{ record.get_count() }}</td>
-            <td>
-                <a href="{{ url_for('view', index=loop.index0) }}">
-                    <button>View</button>
-                </a>
-                <a href="{{ url_for('edit', index=loop.index0) }}">
-                    <button>Edit</button>
-                </a>
-                <a href="{{ url_for('delete', index=loop.index0) }}">
-                    <button>Delete</button>
-                </a>
-            </td>
 
-        </tr>
-        {% endfor %}
-    </table>
+    <!-- All action buttons and search on one line -->
+    <form method="GET" action="/search" id="searchForm" style="display:inline;">
+
+        <!-- Create Button -->
+        <a href="{{ url_for('create') }}">
+            <button>+ Create New Record</button>
+        </a>
+        <a href="{{ url_for('reload') }}" style="margin-left: 15px;">
+            <button>↺ Reload Dataset</button>
+        </a>
+        <a href="{{ url_for('save') }}" style="margin-left: 15px;">
+        <button>💾 Save to File</button>
+        </a>
+
+        <!-- Search Field and Buttons -->
+        <input type="text" name="species_query" id="species_query"
+            value="{{ species_query }}"
+            placeholder="Any Species Code e.g. DUNL ..."
+            size="30" style="margin-left: 15px;">
+
+        <!-- Hidden fields keep dropdown selections when Search button is clicked -->
+        <input type="hidden" name="sites"  id="hidden_sites"  value="{{ selected_sites[0]  if selected_sites  else '' }}">
+        <input type="hidden" name="areas"  id="hidden_areas"  value="{{ selected_areas[0]  if selected_areas  else '' }}">
+        <input type="hidden" name="dates"  id="hidden_dates"  value="{{ selected_dates[0]  if selected_dates  else '' }}">
+
+        <button type="submit" style="margin-left: 10px;">🔍 Search</button>
+        <button type="button" onclick="window.location='/'" style="margin-left: 10px;">✕ Clear</button>
+
+        <div style="font-size:0.85em; color:#555; margin-top:6px; margin-bottom:6px;">
+            Showing <strong>{{ total }}</strong> record(s)
+        </div>
+
+        <br>
+        <table border="1" style="border-collapse: collapse; width: 90%; text-align: center;">
+            <colgroup>
+                <col style="width: 10%;">    <!-- Index -->
+                <col style="width: 5%;">    <!-- Site -->
+                <col style="width: 5%;">    <!-- Area -->
+                <col style="width: 15%;">   <!-- Visit Date -->
+                <col style="width: 15%;">   <!-- Start Time -->
+                <col style="width: 20%;">   <!-- Species Code -->
+                <col style="width: 10%;">    <!-- Count -->
+            </colgroup>
+            <tr>
+                <th>Index</th>
+
+                <!-- Dropdown starts -->
+                <th>
+                    Site<br>
+                    <select name="sites" onchange="syncAndSubmit('sites', this.value)"
+                            style="width:100%; font-size:0.8em; margin-top:4px; text-align:center;
+                            background-color:lightsteelblue;" >
+                        <option value="">All</option>
+                        {% for site in unique_sites %}
+                        <option value="{{ site }}"
+                            {% if site in selected_sites %}selected{% endif %}>
+                            {{ site }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </th>
+
+                <!-- Area — dropdown in header -->
+                <th>
+                    Area<br>
+                    <select name="areas" onchange="syncAndSubmit('areas', this.value)"
+                            style="width:100%; font-size:0.8em; margin-top:4px; text-align:center;
+                            background-color:lightsteelblue;">
+                        <option value="">All</option>
+                        {% for area in unique_areas %}
+                        <option value="{{ area }}"
+                            {% if area in selected_areas %}selected{% endif %}>
+                            {{ area }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </th>
+
+                <!-- Visit Date — dropdown in header -->
+                <th>
+                    Visit Date<br>
+                    <select name="dates" onchange="syncAndSubmit('dates', this.value)"
+                            style="width:100%; font-size:0.8em; margin-top:4px; text-align:center;
+                            background-color:lightsteelblue;">
+                        <option value="">All</option>
+                        {% for date in unique_dates %}
+                        <option value="{{ date }}"
+                            {% if date in selected_dates %}selected{% endif %}>
+                            {{ date }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </th>
+
+                <!-- Dropdown ends -->
+
+                <th>Start Time</th>
+                <th>Species Code</th>
+                <th>Count</th>
+            </tr>
+            {% for record in records %}
+            <tr>
+                <td>{{ loop.index0 }}</td>
+                <td>{{ record.get_site_identification() }}</td>
+                <td>{{ record.get_area() }}</td>
+                <td>{{ record.get_visit_date() }}</td>
+                <td>{{ record.get_start_time() }}</td>
+                <td>{{ record.get_species_code() }}</td>
+                <td>{{ record.get_count() }}</td>
+                <td>
+                    <a href="{{ url_for('view', index=loop.index0) }}">
+                        <button>View</button>
+                    </a>
+                    <a href="{{ url_for('edit', index=loop.index0) }}">
+                        <button>Edit</button>
+                    </a>
+                    <a href="{{ url_for('delete', index=loop.index0) }}">
+                        <button>Delete</button>
+                    </a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    
+    <script>
+        function syncAndSubmit(field, value) {
+            document.getElementById("hidden_" + field).value = value;
+            document.getElementById("searchForm").submit();
+        }
+    </script>
+
 {% endblock %}
