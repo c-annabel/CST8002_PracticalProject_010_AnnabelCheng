@@ -68,9 +68,6 @@ Reference:
 [7] Sofwan A. (Oct. 24, 2022). Creating Data Filter using Flask. Medium. [Online]. 
     Available at: https://medium.com/nerd-for-tech/creating-data-filter-using-flask-3f96c393b8df 
     [Accessed: Apr. 1, 2026].
-[8] Pallets. (2010). Welcome to Flask — Flask documentation (3.1.x). Flask Official Documentation. Pallets. [Online]. 
-    Available at: https://flask.palletsprojects.com/en/stable/ 
-    [Accessed: Apr. 1, 2026].
 
 
 """
