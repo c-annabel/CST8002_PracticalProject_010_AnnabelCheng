@@ -93,13 +93,13 @@ Reference:
 
         <!-- Create Button -->
         <a href="{{ url_for('create') }}">
-            <button>+ Create New Record</button>
+            <button type="button">+ Create New Record</button>
         </a>
         <a href="{{ url_for('reload') }}" style="margin-left: 15px;">
-            <button>↺ Reload Dataset</button>
+            <button type="button">↺ Reload Dataset</button>
         </a>
         <a href="{{ url_for('save') }}" style="margin-left: 15px;">
-        <button>💾 Save to File</button>
+        <button type="button">💾 Save to File</button>
         </a>
 
         <!-- Search Field and Buttons -->
@@ -199,13 +199,13 @@ Reference:
                 <td>{{ record.get_count() }}</td>
                 <td>
                     <a href="{{ url_for('view', index=loop.index0) }}">
-                        <button>View</button>
+                        <button type="button">View</button>
                     </a>
                     <a href="{{ url_for('edit', index=loop.index0) }}">
-                        <button>Edit</button>
+                        <button type="button">Edit</button>
                     </a>
                     <a href="{{ url_for('delete', index=loop.index0) }}">
-                        <button>Delete</button>
+                        <button type="button">Delete</button>
                     </a>
                 </td>
 
@@ -213,7 +213,7 @@ Reference:
             {% endfor %}
         </table>
     </form>
-    
+
     <script>
         function syncAndSubmit(field, value) {
             document.getElementById("hidden_" + field).value = value;
