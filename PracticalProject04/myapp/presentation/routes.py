@@ -327,3 +327,35 @@ def save():
     new_file = storage.save_to_new_file()
     flash(f"Data saved successfully to: {new_file}", "success")
     return redirect(url_for('index'))
+
+# ==============================
+# Route: Search / Filter Records
+# URL:   GET /search
+# Practical Practice 4 
+# ==============================
+
+@app.route('/search')
+def search():
+    """
+    Route handler for searching and filtering records.
+
+    Reads GET parameters for species code text and selected
+    site, area, and visit date values. Delegates filtering to
+    the Business Layer and renders results in index.html.
+    Dropdown options are derived from filtered results only,
+    so they cascade to reflect only values present in the results.
+
+    Returns:
+        Response: Rendered index.html template with filtered results
+                  and preserved form state.
+
+    """
+    species_query  = request.args.get("species_query", "").strip()
+    selected_sites = [s for s in request.args.getlist("sites") if s]
+    selected_areas = [s for s in request.args.getlist("areas") if s]
+    selected_dates = [s for s in request.args.getlist("dates") if s]
+
+    results = storage.filter_records(
+        species_query, selected_sites, selected_areas, selected_dates
+    )
+
